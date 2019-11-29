@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name_movie">Movie Catalogue</string>
+    <string name="app_name_tvshow">Tv Show Catalogue</string>
+    <string name="title_home">Home</string>
+    <string name="title_movie">Movies</string>
+    <string name="title_tv_show">Tv Shows</string>
+    <string name="name_heroes">name movies</string>
+    <string name="lorem">Description</string>
+    <string name="todo_photo_movie">TODO: PHOTO MOVIE</string>
+    <string name="action">action</string>
+    <string name="tahun">Release:</string>
+    <string name="tahun_pembuatan">years Making</string>
+    <string name="deskripsi">Description</string>
+    <string name="rating">Rating</string>
+    <string name="rating_nya">9.4</string>
+    <string name="vote">vote</string>
+    <string name="total_vote">total Vote</string>
+    <string name="API">"&amp;language=en-US"</string>
+    <string name="succes_add_data">Success Add Movie</string>
+    <string name="failed_add_data">Movies have has been added to the favorites menu</string>
+    <string name="notif_failed_delete">Failed delete data</string>
+    <string name="succes_add_data_tv">Success Add TV</string>
+    <string name="failed_add_data_tv">Tv Show has been added to the favorites menu Add TV</string>
+    <string name="favorit">Favorit</string>
+    <string name="delete">Delete</string>
+    <string name="choose">choose</string>
+    <string name="text_favorit_movie">Movie Favorit in here</string>
+    <string name="text_favorit_tvShow">Tv Show Favorit in here</string>
+    <string name="pengaturan">Settings</string>
+
+
+    <string name="release_reminder">New Movie Reminder</string>
+    <string name="summary_release_reminder">Hey o! klik on if you want notification about daily movies everyday</string>
+    <string name="key_release_reminder">key_release_reminder</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="summary_daily_reminder">Hey o! klik on if you want notification new movies every monday</string>
+    <string name="pref_title_notifications">Notifications</string>
+    <string name="lang">Language</string>
+    <string name="summary_lang">Select Language</string>
+    <string name="key_lang">key_lang</string>
+    <string name="lang_title">Language</string>
+    <string name="today_reminder">key_today_reminder</string>
+    <string name="up_notif_on">Upcoming Notif ON</string>
+    <string name="up_notif_off">Upcoming Notif OFF</string>
+    <string name="header_daily">Hey o!</string>
+    <string name="desk_daily">Latest Movies is Coming up, let\'s see!</string>
+    <string name="today_release">Some Movie just release Today!</string>
+    <string name="daily_notif_on">Daily Notif ON</string>
+    <string name="daily_notif_off">Daily Notif OFF</string>
+    <string name="id_notification">11001</string>
+    <string name="channel_name">NOTIFICATION MOVIES</string>
+    <string name="release_text1">Film</string>
+    <string name="enjoy">Hey o!</string>
+    <string name="zulkarnaen">Thanks</string>
+    <string name="zulkarnaen1">Support me if you like it</string>
+    <string name="zulkarnaen2">instagram: @skzulka</string>
+
+
+    <string name="empty">empty</string>
+    <string name="ini_foto">this foto</string>
+    <string name="search">search</string>
+    <string name="my_favorit_movie">MY FAVORIT MOVIE</string>
+
+
+</resources>

@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name_movie">Katalog Film</string>
+    <string name="app_name_tvshow">Katalog Sinetron</string>
+    <string name="title_home">Awal</string>
+    <string name="title_movie">Film</string>
+    <string name="title_tv_show">Sinertron</string>
+    <string name="name_heroes">Judul Film</string>
+    <string name="lorem">Deskripsi</string>
+    <string name="todo_photo_movie">TODO: Photo Film</string>
+    <string name="action">Aksi</string>
+    <string name="tahun">Tahun:</string>
+    <string name="tahun_pembuatan">Tahun Pembuatan</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="rating">Rating</string>
+    <string name="rating_nya">9.4</string>
+    <string name="vote">vote</string>
+    <string name="total_vote">total Vote</string>
+    <string name="API">"&amp;language=id"</string>
+    <string name="succes_add_data">Berhasil Tambah Movie</string>
+    <string name="failed_add_data">Movie sudah ditambahkan di menu Favorit</string>
+    <string name="notif_failed_delete">Gagal Hapus data</string>
+    <string name="succes_add_data_tv">Berhasil Tambah TV</string>
+    <string name="failed_add_data_tv">Tv sudah ditambahkan di menu Favorit</string>
+    <string name="favorit">Favorit</string>
+    <string name="delete">hapus</string>
+    <string name="choose">pilih</string>
+    <string name="text_favorit_movie">Film Favorit ada di sini</string>
+    <string name="text_favorit_tvShow">Serial Tv Favorit ada di sini</string>
+
+    <string name="release_reminder">Pengingat Film Baru</string>
+    <string name="summary_release_reminder">Hey o! Klik aktifkan untuk notifikasi harian terasik setiap hari</string>
+    <string name="key_release_reminder">key_release_reminder</string>
+    <string name="daily_reminder">Pengingat Harian</string>
+    <string name="summary_daily_reminder">Hey o! klik aktifkan untuk notifikasi movies terbaru setiap hari senin</string>
+    <string name="pref_title_notifications">Notifikasi</string>
+    <string name="lang">Bahasa</string>
+    <string name="summary_lang">Pilih Bahasa</string>
+    <string name="key_lang">key_lang</string>
+    <string name="lang_title">Bahasa</string>
+    <string name="today_reminder">key_today_reminder</string>
+    <string name="up_notif_on">Notif yang akan datang AKTIF</string>
+    <string name="up_notif_off">Notif yang akan datang MATI</string>
+    <string name="header_daily">Hey o!</string>
+    <string name="desk_daily">Ada film baru nih, up gan mari cek!</string>
+    <string name="today_release">Beberapa film telah rilis</string>
+    <string name="daily_notif_on">Notifikasi Harian Hidup</string>
+    <string name="daily_notif_off">Notifikasi Harian Mati</string>
+    <string name="id_notification">11001</string>
+    <string name="channel_name">NOTIFICATION MOVIES</string>
+    <string name="release_text1">Film</string>
+    <string name="enjoy">Hey o!</string>
+    <string name="zulkarnaen">Terimakasih</string>
+    <string name="zulkarnaen1">Support saya jika kalian suka</string>
+    <string name="zulkarnaen2">instagram: @skzulka</string>
+
+
+    <string name="empty">kosong</string>
+    <string name="ini_foto">ini foto</string>
+    <string name="search">search</string>
+    <string name="my_favorit_movie">Film Favorit Ku</string>
+    <string name="pengaturan">Pengaturan</string>
+
+
+</resources>
