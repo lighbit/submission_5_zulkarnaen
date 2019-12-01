@@ -27,13 +27,13 @@ import static com.example.submission5.database.DatabaseContract.TVFavColumns.TV_
  */
 public class TVShowFavoriteHelper {
     private static final String DATABASE_TABLE = TV_TABLE_NAME;
-    private static DatabaseHelper databaseHelper;
+    private static DatabaseHelper myDatabaseHelper;
     private static TVShowFavoriteHelper INSTANCE;
 
-    private static SQLiteDatabase database;
+    private static SQLiteDatabase myDatabase;
 
     private TVShowFavoriteHelper(Context context) {
-        databaseHelper = new DatabaseHelper(context);
+        myDatabaseHelper = new DatabaseHelper(context);
     }
 
     public static TVShowFavoriteHelper getInstance(Context context) {
@@ -47,21 +47,13 @@ public class TVShowFavoriteHelper {
         return INSTANCE;
     }
 
-    public void open() throws SQLException {
-        database = databaseHelper.getWritableDatabase();
+    public void openMyDatabase() throws SQLException {
+        myDatabase = myDatabaseHelper.getWritableDatabase();
     }
-
-    public void close() {
-        databaseHelper.close();
-
-        if (database.isOpen())
-            database.close();
-    }
-
 
     public ArrayList<TvShow> getAllTvFavorite() {
         ArrayList<TvShow> arrayList = new ArrayList<>();
-        Cursor cursor = database.query(DATABASE_TABLE, null,
+        Cursor cursor = myDatabase.query(DATABASE_TABLE, null,
                 null,
                 null,
                 null,
@@ -90,7 +82,7 @@ public class TVShowFavoriteHelper {
         return arrayList;
     }
 
-    public long insertTv(TvShow tvShowFavorite) {
+    public long insertIntoTvShow(TvShow tvShowFavorite) {
         ContentValues args = new ContentValues();
         args.put(BaseColumns._ID, tvShowFavorite.getId());
         args.put(TV_TITLE, tvShowFavorite.getOriginal_name());
@@ -99,11 +91,11 @@ public class TVShowFavoriteHelper {
         args.put(TV_FIRST_AIR_DATE, tvShowFavorite.getFirst_air_date());
         args.put(TV_PHOTO, tvShowFavorite.getPoster_path());
         args.put(TV_OVERVIEW, tvShowFavorite.getOverview());
-        return database.insert(DATABASE_TABLE, null, args);
+        return myDatabase.insert(DATABASE_TABLE, null, args);
     }
 
-    public int deleteTv(int id) {
-        return database.delete(TV_TABLE_NAME, _ID + " = '" + id + "'", null);
+    public int deleteIntoTvShow(int id) {
+        return myDatabase.delete(TV_TABLE_NAME, _ID + " = '" + id + "'", null);
     }
 
 

@@ -25,29 +25,29 @@ public class MenuSetting extends AppCompatService {
     public static class MainFragmentPreference extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
         /*Reminder for Upcoming Movies*/
-        DailyUpcomingMovies dailyUpcomingMovies = new DailyUpcomingMovies();
+        DailyUpcomingMovies myDailyUpcomingMovies = new DailyUpcomingMovies();
         /*Reminder for daily Movies*/
-        DailyPushNotificationForMovie dailyPushNotificationForMovies = new DailyPushNotificationForMovie();
+        DailyPushNotificationForMovie myDailyPushNotificationForMovies = new DailyPushNotificationForMovie();
         /*Change Reminder*/
         SwitchPreference changeReminder;
         SwitchPreference changeReminderToday;
 
         /*function if some change in user*/
         @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            String key = preference.getKey();
-            boolean value = (boolean) newValue;
+        public boolean onPreferenceChange(Preference myPreference, Object myObject) {
+            String key = myPreference.getKey();
+            boolean value = (boolean) myObject;
             if (key.equals(getString(R.string.today_reminder))) {
                 if (value) {
-                    dailyPushNotificationForMovies.setMyAlarm(getActivity());
+                    myDailyPushNotificationForMovies.setMyAlarm(getActivity());
                 } else {
-                    dailyPushNotificationForMovies.cancelMyAlarm(getActivity());
+                    myDailyPushNotificationForMovies.cancelMyAlarm(getActivity());
                 }
             } else {
                 if (value) {
-                    dailyUpcomingMovies.setMyAlarm(getActivity());
+                    myDailyUpcomingMovies.setMyAlarm(getActivity());
                 } else {
-                    dailyUpcomingMovies.cancelMyAlarm(getActivity());
+                    myDailyUpcomingMovies.cancelMyAlarm(getActivity());
                 }
             }
             return true;
@@ -56,10 +56,10 @@ public class MenuSetting extends AppCompatService {
 
         /*sesuaikan dengan ketentuan*/
         @Override
-        public void onCreate(final Bundle savedInstanceState) {
+        public void onCreate(final Bundle myInstanceSaved) {
 
             /*merubah notifikasi on atau off pada menu setting*/
-            super.onCreate(savedInstanceState);
+            super.onCreate(myInstanceSaved);
             addPreferencesFromResource(R.xml.main_menu_settings);
             changeReminder = (SwitchPreference) findPreference(getString(R.string.today_reminder));
             changeReminder.setOnPreferenceChangeListener(this);

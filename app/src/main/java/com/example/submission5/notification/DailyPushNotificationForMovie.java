@@ -94,7 +94,7 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
         /*Set title, text and other what you need in your phone when notification available*/
         Uri uriTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_favorite)
+                .setSmallIcon(R.drawable.ic_movie)
                 .setContentTitle(title)
                 .setContentText(desc)
                 .setContentIntent(myPendingIntents)
@@ -122,6 +122,5 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
         myNotificationManager.notify(R.string.id_notification, builder.build());
 
     }
-
 
 }

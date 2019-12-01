@@ -58,10 +58,10 @@ public class MoviesProvider extends ContentProvider {
         int matcherTest = uriMatcher.match(uri);
         switch (matcherTest) {
             case MY_MOVIE:
-                cursor = myMoviesHelper.queryDescProvider();
+                cursor = myMoviesHelper.queryIntoDescProvider();
                 break;
             case MY_MOVIE_ID:
-                cursor = myMoviesHelper.queryProviderByID(uri.getLastPathSegment());
+                cursor = myMoviesHelper.queryIntoProviderByID(uri.getLastPathSegment());
                 break;
             default:
                 cursor = null;
@@ -82,7 +82,7 @@ public class MoviesProvider extends ContentProvider {
         long addedInto;
 
         if (uriMatcher.match(uri) == MY_MOVIE) {
-            addedInto = myMoviesHelper.insertProvider(values);
+            addedInto = myMoviesHelper.insertIntoProvider(values);
         } else {
             addedInto = 0;
         }
@@ -97,7 +97,7 @@ public class MoviesProvider extends ContentProvider {
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         int movieUpdated;
         if (uriMatcher.match(uri) == MY_MOVIE_ID) {
-            movieUpdated = myMoviesHelper.updateProvider(uri.getLastPathSegment(), values);
+            movieUpdated = myMoviesHelper.updateIntoProvider(uri.getLastPathSegment(), values);
         } else {
             movieUpdated = 0;
         }
@@ -114,7 +114,7 @@ public class MoviesProvider extends ContentProvider {
 
         int match = uriMatcher.match(uri);
         if (match == MY_MOVIE_ID) {
-            movieDeleted = myMoviesHelper.deleteProvider(uri.getLastPathSegment());
+            movieDeleted = myMoviesHelper.deleteIntoProvider(uri.getLastPathSegment());
             Log.v(Objects.requireNonNull(getContext()).getString(R.string.app_name_movie), "" + movieDeleted);
         } else {
             movieDeleted = 0;

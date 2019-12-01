@@ -28,7 +28,7 @@ public class TvShowFavorite extends AppCompatActivity {
 
         /*Open Database*/
         TVShowFavoriteHelper tvShowFavoriteHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
-        tvShowFavoriteHelper.open();
+        tvShowFavoriteHelper.openMyDatabase();
 
         /*Create Array listTvShow*/
         WeakReference<TVShowFavoriteHelper> weakReference = new WeakReference<>(tvShowFavoriteHelper);

@@ -56,7 +56,7 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
         positionDefault = getIntent().getIntExtra(EXTRA_POSITION_DEFAULT, 0);
 
         myFavoriteTvShowHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
-        myFavoriteTvShowHelper.open();
+        myFavoriteTvShowHelper.openMyDatabase();
 
         myFavoriteTvShow = getIntent().getParcelableExtra(EXTRA_TV_SHOW);
 
@@ -150,7 +150,7 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
                             myProgressBar.setVisibility(View.INVISIBLE);
 
                             myFavoriteTvShowHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
-                            myFavoriteTvShowHelper.open();
+                            myFavoriteTvShowHelper.openMyDatabase();
 
                             myFavoriteTvShow = getIntent().getParcelableExtra(EXTRA_TV_FAVORITE);
                             if (tvShow.isOnfavorites()) {
@@ -222,7 +222,7 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
 
             if (!isFav) {
 
-                long result = myFavoriteTvShowHelper.insertTv(myFavoriteTvShow);
+                long result = myFavoriteTvShowHelper.insertIntoTvShow(myFavoriteTvShow);
 
                 if (result > 0) {
                     myFavoriteTvShow.setId((int) result);
@@ -236,7 +236,7 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
 
         } else if (view.getId() == R.id.btn_delete) {
             myFavoriteTvShowHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
-            long result = myFavoriteTvShowHelper.deleteTv(positionDefault);
+            long result = myFavoriteTvShowHelper.deleteIntoTvShow(positionDefault);
             if (result > 0) {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);

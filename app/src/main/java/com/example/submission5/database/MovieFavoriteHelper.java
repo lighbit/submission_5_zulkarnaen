@@ -31,14 +31,14 @@ public class MovieFavoriteHelper {
     @SuppressLint("StaticFieldLeak")
     private static MovieFavoriteHelper INSTANCE;
     private static final String DATABASE_TABLE = MOVIE_TABLE_NAME;
-    private static DatabaseHelper dataBaseHelper;
-    private Context context;
-    private static SQLiteDatabase database;
+    private static DatabaseHelper myDatabaseHelper;
+    private Context myContext;
+    private static SQLiteDatabase myDatabase;
 
     /*create constructor*/
-    public MovieFavoriteHelper(Context context) {
-        this.context = context;
-        dataBaseHelper = new DatabaseHelper(context);
+    public MovieFavoriteHelper(Context myContext) {
+        this.myContext = myContext;
+        myDatabaseHelper = new DatabaseHelper(myContext);
     }
 
     /*getInstance*/
@@ -53,23 +53,15 @@ public class MovieFavoriteHelper {
         return INSTANCE;
     }
 
-    /*open database for databaseHandler*/
+    /*openMyDatabase myDatabase for databaseHandler*/
     public void openDatabase() throws SQLException {
-        database = dataBaseHelper.getWritableDatabase();
-    }
-
-    /*close database*/
-    public void closeDatabase() {
-        dataBaseHelper.close();
-
-        if (database.isOpen())
-            database.close();
+        myDatabase = myDatabaseHelper.getWritableDatabase();
     }
 
     /*get all movies favorite Data*/
     public ArrayList<Movies> getAllMoviesFavorite() {
         ArrayList<Movies> arrayList = new ArrayList<>();
-        Cursor cursor = database.query(DATABASE_TABLE, null,
+        Cursor cursor = myDatabase.query(DATABASE_TABLE, null,
                 null,
                 null,
                 null,
@@ -98,7 +90,7 @@ public class MovieFavoriteHelper {
         return arrayList;
     }
 
-    /*Insert Data to the database*/
+    /*Insert Data to the myDatabase*/
     public long insertIntoMovie(Movies movieFavorite) {
 
         try {
@@ -111,7 +103,7 @@ public class MovieFavoriteHelper {
             args.put(MOVIE_OVERVIEW, movieFavorite.getOverview());
             args.put(MOVIE_PHOTO, movieFavorite.getPoster_path());
 
-            return database.insert(DATABASE_TABLE, null, args);
+            return myDatabase.insert(DATABASE_TABLE, null, args);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,12 +117,12 @@ public class MovieFavoriteHelper {
 
         Uri uri = CONTENT_URI;
         uri = uri.buildUpon().appendPath(String.valueOf(id)).build();
-        return context.getContentResolver().delete(uri, null, null);
+        return myContext.getContentResolver().delete(uri, null, null);
     }
 
     /*query data if wan to DESCENDING*/
-    public Cursor queryDescProvider() {
-        return database.query(
+    public Cursor queryIntoDescProvider() {
+        return myDatabase.query(
                 DATABASE_TABLE,
                 null,
                 null,
@@ -141,8 +133,8 @@ public class MovieFavoriteHelper {
     }
 
     /*call by id*/
-    public Cursor queryProviderByID(String id) {
-        return database.query(DATABASE_TABLE, null
+    public Cursor queryIntoProviderByID(String id) {
+        return myDatabase.query(DATABASE_TABLE, null
                 , _ID + " = ?"
                 , new String[]{id}
                 , null
@@ -152,16 +144,16 @@ public class MovieFavoriteHelper {
     }
 
     /*Insert Provide*/
-    public long insertProvider(ContentValues values) {
-        return database.insert(DATABASE_TABLE, null, values);
+    public long insertIntoProvider(ContentValues values) {
+        return myDatabase.insert(DATABASE_TABLE, null, values);
     }
     /*Update Provide*/
-    public int updateProvider(String id, ContentValues values) {
-        return database.update(DATABASE_TABLE, values, _ID + " = ?", new String[]{id});
+    public int updateIntoProvider(String id, ContentValues values) {
+        return myDatabase.update(DATABASE_TABLE, values, _ID + " = ?", new String[]{id});
     }
     /*Delete Provide*/
-    public int deleteProvider(String id) {
-        return database.delete(DATABASE_TABLE, _ID + " = ?", new String[]{id});
+    public int deleteIntoProvider(String id) {
+        return myDatabase.delete(DATABASE_TABLE, _ID + " = ?", new String[]{id});
     }
 
 }
