@@ -38,13 +38,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
 
     implementation 'com.loopj.android:android-async-http:1.4.9'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-rc01'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation "com.squareup.retrofit2:converter-gson:2.3.0"
     implementation 'com.android.volley:volley:1.1.1'
     implementation "com.google.android.gms:play-services-gcm:17.0.0"
-
-
 }

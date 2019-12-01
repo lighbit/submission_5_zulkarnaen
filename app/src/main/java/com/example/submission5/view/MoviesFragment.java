@@ -25,9 +25,9 @@ import java.util.Objects;
  * @author zulkarnaen
  */
 public class MoviesFragment extends Fragment {
-    private MoviesAdapter moviesAdapter;
-    private ProgressBar progressBar;
-    private MoviesServiceImpl moviesModel;
+    private MoviesAdapter myMoviesAdapter;
+    private ProgressBar myProgressBar;
+    private MoviesServiceImpl myMoviesModel;
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -37,40 +37,40 @@ public class MoviesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         /*get Activity*/
-        moviesModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(MoviesServiceImpl.class);
+        myMoviesModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(MoviesServiceImpl.class);
     }
 
     private Observer<ArrayList<Movies>> getDataMovies = new Observer<ArrayList<Movies>>() {
         @Override
         public void onChanged(ArrayList<Movies> movies) {
             if (movies != null) {
-                moviesAdapter.setWordMovies(getResources().getString(R.string.choose));
-                moviesAdapter.setDataMovies(movies);
-                moviesAdapter.isOnFavoriteMovies(false);
-                progressBar.setVisibility(View.GONE);
+                myMoviesAdapter.setWordMovies(getResources().getString(R.string.choose));
+                myMoviesAdapter.setDataMovies(movies);
+                myMoviesAdapter.isOnFavoriteMovies(false);
+                myProgressBar.setVisibility(View.GONE);
             }
         }
     };
 
     private void showLoading() {
-        progressBar.setVisibility(View.VISIBLE);
+        myProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        moviesAdapter = new MoviesAdapter(getActivity());
+        myMoviesAdapter = new MoviesAdapter(getActivity());
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.rv_category);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerView.setAdapter(moviesAdapter);
+        recyclerView.setAdapter(myMoviesAdapter);
 
         MoviesServiceImpl moviesViewModel = ViewModelProviders.of(this).get(MoviesServiceImpl.class);
         moviesViewModel.getMovies().observe(this, getDataMovies);
         moviesViewModel.setMoviesData(Objects.requireNonNull(this.getContext()));
 
-        progressBar = view.findViewById(R.id.progressBarMovies);
-        progressBar.bringToFront();
+        myProgressBar = view.findViewById(R.id.progressBarMovies);
+        myProgressBar.bringToFront();
 
         showLoading();
 
@@ -82,14 +82,14 @@ public class MoviesFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         /*Get Observer then set Data*/
-        moviesModel.getMovies().observe(Objects.requireNonNull(getActivity()), getDataMovies);
-        moviesModel.setMoviesData(Objects.requireNonNull(this.getContext()));
+        myMoviesModel.getMovies().observe(Objects.requireNonNull(getActivity()), getDataMovies);
+        myMoviesModel.setMoviesData(Objects.requireNonNull(this.getContext()));
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         /*remove Observer*/
-        moviesModel.getMovies().removeObserver(getDataMovies);
+        myMoviesModel.getMovies().removeObserver(getDataMovies);
     }
 }

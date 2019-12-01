@@ -18,33 +18,33 @@ import java.util.ArrayList;
  * @author zulkarnaen
  */
 public class TvShowFavorite extends AppCompatActivity {
-    private ArrayList<TvShow> list = new ArrayList<>();
+    private ArrayList<TvShow> listTvShow = new ArrayList<>();
 
     /*Create on Create when Favorite call*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_movie_favorit);
+        setContentView(R.layout.fragment_dashboard);
 
         /*Open Database*/
         TVShowFavoriteHelper tvShowFavoriteHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
         tvShowFavoriteHelper.open();
 
-        /*Create Array*/
+        /*Create Array listTvShow*/
         WeakReference<TVShowFavoriteHelper> weakReference = new WeakReference<>(tvShowFavoriteHelper);
         ArrayList<TvShow> arrayList = weakReference.get().getAllTvFavorite();
 
-        RecyclerView rvCategory = findViewById(R.id.rv_category_favorite);
+        RecyclerView rvCategory = findViewById(R.id.rv_category2);
         rvCategory.setHasFixedSize(true);
 
 
-        list.addAll(arrayList);
+        listTvShow.addAll(arrayList);
 
         /*Set new layout*/
         rvCategory.setLayoutManager(new LinearLayoutManager(this));
         TvShowAdapter tvAdapter = new TvShowAdapter(this);
         tvAdapter.setWord(getResources().getString(R.string.choose));
-        tvAdapter.setDataTvshow(list);
+        tvAdapter.setDataTvShow(listTvShow);
         tvAdapter.isOnFavoriteTvShow(true);
         rvCategory.setAdapter(tvAdapter);
 

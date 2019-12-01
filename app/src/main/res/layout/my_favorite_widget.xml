@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,7 +11,29 @@
         android:weightSum="10">
 
         <TextView
-            android:id="@+id/banner_text"
+            android:id="@+id/layout_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:background="@color/design_default_color_primary"
+            android:padding="16dp"
+            android:text="MY WIDGET"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <StackView
+            android:id="@+id/image_inside"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:loopViews="true" />
+
+        <TextView
+            android:id="@+id/layout_down"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -22,15 +44,8 @@
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <StackView
-            android:id="@+id/stack_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="9"
-            android:loopViews="true" />
-
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
     <TextView
@@ -39,8 +54,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="@color/colorAccent"
-        android:textAlignment="center"
         android:text="@string/empty"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold"

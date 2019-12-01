@@ -27,58 +27,57 @@ import java.util.Objects;
  */
 public class TVShowFragment extends Fragment {
 
-    private TvShowAdapter tvShowAdapter;
-    private ProgressBar progressBar;
-    private TvShowServiceImpl tvShowImplService;
+    private TvShowAdapter myTvShowAdapter;
+    private ProgressBar myProgressBar;
+    private TvShowServiceImpl myTvShowServiceImpl;
 
 
     public TVShowFragment() {
         // Required empty public constructor
     }
 
-    private Observer<ArrayList<TvShow>> getTvShow = new Observer<ArrayList<TvShow>>() {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        /*main Model instance*/
+        myTvShowServiceImpl = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(TvShowServiceImpl.class);
+    }
+
+    private Observer<ArrayList<TvShow>> getDataTvShow = new Observer<ArrayList<TvShow>>() {
         @Override
         public void onChanged(ArrayList<TvShow> tvShows) {
             if (tvShows != null) {
-                tvShowAdapter.setWord(getResources().getString(R.string.choose));
-                tvShowAdapter.setDataTvshow(tvShows);
-                tvShowAdapter.isOnFavoriteTvShow(false);
-                progressBar.setVisibility(View.GONE);
+                myTvShowAdapter.setWord(getResources().getString(R.string.choose));
+                myTvShowAdapter.setDataTvShow(tvShows);
+                myTvShowAdapter.isOnFavoriteTvShow(false);
+                myProgressBar.setVisibility(View.GONE);
             }
         }
     };
 
     private void showLoading() {
-        progressBar.setVisibility(View.VISIBLE);
+        myProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        tvShowAdapter = new TvShowAdapter(getActivity());
+        myTvShowAdapter = new TvShowAdapter(getActivity());
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.rv_category2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerView.setAdapter(tvShowAdapter);
+        recyclerView.setAdapter(myTvShowAdapter);
 
         TvShowServiceImpl tvShowViewModel = ViewModelProviders.of(this).get(TvShowServiceImpl.class);
-        tvShowViewModel.getTvShow().observe(this, getTvShow);
+        tvShowViewModel.getTvShow().observe(this, getDataTvShow);
         tvShowViewModel.setTvShow(Objects.requireNonNull(this.getContext()));
 
-        progressBar = view.findViewById(R.id.progressBarTv);
-        progressBar.bringToFront();
+        myProgressBar = view.findViewById(R.id.progressBarTv);
+        myProgressBar.bringToFront();
 
         showLoading();
 
         return view;
-    }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        /*main Model instance*/
-        tvShowImplService = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(TvShowServiceImpl.class);
     }
 
     @Override
@@ -86,8 +85,8 @@ public class TVShowFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         /*Get Observer then set Data*/
-        tvShowImplService.getTvShow().observe(Objects.requireNonNull(getActivity()), getTvShow);
-        tvShowImplService.setTvShow(Objects.requireNonNull(this.getContext()));
+        myTvShowServiceImpl.getTvShow().observe(Objects.requireNonNull(getActivity()), getDataTvShow);
+        myTvShowServiceImpl.setTvShow(Objects.requireNonNull(this.getContext()));
     }
 
     @Override
@@ -95,6 +94,6 @@ public class TVShowFragment extends Fragment {
         super.onDestroyView();
 
         /*remove Observer*/
-        tvShowImplService.getTvShow().removeObserver(getTvShow);
+        myTvShowServiceImpl.getTvShow().removeObserver(getDataTvShow);
     }
 }

@@ -48,8 +48,8 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
     /*MY API KEY*/
     private static final String MY_API_KEY = "d10721892b71839178ae7c4597123c84";
     private static int idNotification = 2000;
-    private RequestQueue queueNotification;
-    List<ResultsItem> listNotification;
+    private RequestQueue queueNotifications;
+    List<ResultsItem> listDailyNotification;
 
 
     /*when notification on send notification will be show in you notification*/
@@ -95,7 +95,7 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
     }
 
     /*get data when call api*/
-    public void getData(final Context context, String url) {
+    public void getDataApi(final Context context, String url) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Date date = new Date();
         final String today = dateFormat.format(date);
@@ -109,19 +109,16 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
                         JSONObject data = jsonArray.getJSONObject(i);
                         ResultsItem movieItem = new ResultsItem();
                         movieItem.setOriginal_title(data.getString("original_title"));
-                        movieItem.setVote_average(data.getString("vote_average"));
-                        movieItem.setVote_count(data.getString("vote_count"));
-                        movieItem.setOverview(data.getString("overview"));
                         movieItem.setPoster_path(data.getString("poster_path"));
                         if (data.getString("release_date").equals(today)) {
-                            listNotification.add(movieItem);
+                            listDailyNotification.add(movieItem);
                         }
                     }
 
                     String header = context.getString(R.string.header_daily);
                     String title = context.getString(R.string.today_release);
                     new ResultsItem();
-                    sendNewReleaseNotification(context, header, title, idNotification, listNotification);
+                    sendNewReleaseNotification(context, header, title, idNotification, listDailyNotification);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -133,7 +130,7 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
                 error.printStackTrace();
             }
         });
-        queueNotification.add(request);
+        queueNotifications.add(request);
     }
 
     /*do it in background when data come*/
@@ -148,7 +145,7 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
 
         @Override
         protected Void doInBackground(String... strings) {
-            getData(context, strings[0]);
+            getDataApi(context, strings[0]);
             return null;
         }
     }
@@ -166,23 +163,23 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
     /*handle when data is coming*/
     @Override
     public void onReceive(Context context, Intent intent) {
-        listNotification = new ArrayList<>();
-        queueNotification = Volley.newRequestQueue(context);
+        listDailyNotification = new ArrayList<>();
+        queueNotifications = Volley.newRequestQueue(context);
         callApiMovie(context);
 
     }
 
     /*set pending when alarm change on or of*/
     private static PendingIntent getPending(Context context) {
-        Intent intent = new Intent(context, DailyUpcomingMovies.class);
-        return PendingIntent.getBroadcast(context, 1011, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent myIntents = new Intent(context, DailyUpcomingMovies.class);
+        return PendingIntent.getBroadcast(context, 1011, myIntents, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     /*You can disable alarm when you don't needed*/
-    public void cancelAlarm(Context context) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        assert alarmManager != null;
-        alarmManager.cancel(getPending(context));
+    public void cancelMyAlarm(Context context) {
+        AlarmManager myAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        assert myAlarmManager != null;
+        myAlarmManager.cancel(getPending(context));
 
         /*toast will be show when you off that daily notification*/
         Toast.makeText(context, R.string.up_notif_off, Toast.LENGTH_SHORT).show();
@@ -190,33 +187,36 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
 
     /*Set alarm every monday, maybe after your break in your house or kostan
     you can see some new movies for tomorrow with your girlfriend ;) or.. alone i guest */
-    public void settingAlarm(Context context) {
+    public void setMyAlarm(Context context) {
         int delay = 0;
-        cancelAlarm(context);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, DailyUpcomingMovies.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        cancelMyAlarm(context);
+        AlarmManager myAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent myIntents = new Intent(context, DailyUpcomingMovies.class);
+        PendingIntent myPendingIntents = PendingIntent.getBroadcast(context,
+                100, myIntents, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, 2);
-        calendar.set(Calendar.HOUR_OF_DAY, 6);
+        while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+            calendar.add(Calendar.DATE, 1);
+        }
+        calendar.set(Calendar.HOUR_OF_DAY, 7);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
         /*Different setting for android below Marshmallow and above*/
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            assert alarmManager != null;
-            alarmManager.setInexactRepeating(
+            assert myAlarmManager != null;
+            myAlarmManager.setInexactRepeating(
                     AlarmManager.RTC_WAKEUP,
                     calendar.getTimeInMillis() + delay,
                     AlarmManager.INTERVAL_DAY,
-                    pendingIntent
+                    myPendingIntents
             );
         } else {
-            assert alarmManager != null;
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
-                    calendar.getTimeInMillis() + delay, pendingIntent);
+            assert myAlarmManager != null;
+            myAlarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
+                    calendar.getTimeInMillis() + delay, myPendingIntents);
         }
         idNotification += 1;
         /*toast will be show when you on that daily notification*/

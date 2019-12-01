@@ -23,12 +23,12 @@ import static com.example.submission5.database.DatabaseContract.CONTENT_URI;
 public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private Context myContext;
-    private Cursor listWidget;
+    private Cursor myListWidget;
 
     /*When create set CONTENT URI*/
     @Override
     public void onCreate() {
-        listWidget = myContext.getContentResolver().query(
+        myListWidget = myContext.getContentResolver().query(
                 CONTENT_URI,
                 null,
                 null,
@@ -39,7 +39,7 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
 
     @Override
     public int getCount() {
-        return listWidget.getCount();
+        return myListWidget.getCount();
     }
 
     @Override
@@ -79,38 +79,44 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
 
     /*get Some Item if position not valid call throw*/
     private ResultsItem getSomeItem(int position) {
-        if (!listWidget.moveToPosition(position)) {
+        if (!myListWidget.moveToPosition(position)) {
             throw new IllegalStateException("Some Position not valid");
         }
 
-        return new ResultsItem(listWidget);
+        return new ResultsItem(myListWidget);
     }
 
     @Override
     public RemoteViews getViewAt(int i) {
         ResultsItem myItem = getSomeItem(i);
-        RemoteViews rv = new RemoteViews(myContext.getPackageName(), R.layout.favourite_widget_item);
+        RemoteViews myRemoteViews = new RemoteViews(myContext.getPackageName(), R.layout.my_favorite_widget_item);
 
-        Bitmap bitmap = null;
+        String url_image = "https://image.tmdb.org/t/p/w185" + myItem.getPoster_path();
+
+        Bitmap bitMapImage = null;
         try {
-            bitmap = Glide.with(myContext)
+
+            bitMapImage
+                    = Glide.with(myContext)
                     .asBitmap()
-                    .load("http://image.tmdb.org/t/p/w500" + myItem.getPoster_path())
+                    .load(url_image)
+                    .placeholder(R.color.colorAccent)
                     .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                     .get();
+
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
-        rv.setImageViewBitmap(R.id.imageView, bitmap);
+        myRemoteViews.setImageViewBitmap(R.id.imageView, bitMapImage);
 
         Bundle extras = new Bundle();
         extras.putInt(MyFavoriteWidget.EXTRA_ITEM, i);
         Intent fillInIntent = new Intent();
         fillInIntent.putExtras(extras);
 
-        rv.setOnClickFillInIntent(R.id.imageView, fillInIntent);
-        return rv;
+        myRemoteViews.setOnClickFillInIntent(R.id.imageView, fillInIntent);
+        return myRemoteViews;
     }
 
 }

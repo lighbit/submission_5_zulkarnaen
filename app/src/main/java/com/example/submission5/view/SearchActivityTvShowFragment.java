@@ -22,16 +22,16 @@ import com.example.submission5.presenter.TvShowAdapter;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.example.submission5.MainActivity.INTENT_SEARCH;
+import static com.example.submission5.MainActivity.MY_INTENT_SEARCH;
 
 /**
  * @author zulkarnaen
  */
 public class SearchActivityTvShowFragment extends Fragment {
 
-    private ProgressBar progressBar;
-    private TvShowAdapter tvShowAdapter;
-    private TvShowServiceImpl tvShowImplService;
+    private ProgressBar myProgressBar;
+    private TvShowAdapter myTvShowAdapter;
+    private TvShowServiceImpl myTvShowServiceImpl;
     private String paramSearch = "";
 
     public SearchActivityTvShowFragment() {
@@ -39,68 +39,69 @@ public class SearchActivityTvShowFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(@Nullable Bundle instanceSaved) {
+        super.onCreate(instanceSaved);
 
 
         Bundle bundle = this.getArguments();
-        if (bundle != null) this.paramSearch = bundle.getString(INTENT_SEARCH);
+        if (bundle != null) this.paramSearch = bundle.getString(MY_INTENT_SEARCH);
         else {
             paramSearch = "";
         }
 
-        tvShowImplService = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(TvShowServiceImpl.class);
+        myTvShowServiceImpl = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(TvShowServiceImpl.class);
     }
 
     private Observer<ArrayList<TvShow>> getTvShow = new Observer<ArrayList<TvShow>>() {
         @Override
         public void onChanged(ArrayList<TvShow> tvShowItem) {
             if (tvShowItem != null) {
-                tvShowAdapter.setWord(getResources().getString(R.string.choose));
-                tvShowAdapter.setDataTvshow(tvShowItem);
-                tvShowAdapter.isOnFavoriteTvShow(false);
-                progressBar.setVisibility(View.GONE);
+                myTvShowAdapter.setWord(getResources().getString(R.string.choose));
+                myTvShowAdapter.setDataTvShow(tvShowItem);
+                myTvShowAdapter.isOnFavoriteTvShow(false);
+                myProgressBar.setVisibility(View.GONE);
             }
         }
     };
 
     private void showLoading() {
-        progressBar.setVisibility(View.VISIBLE);
+        myProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        tvShowAdapter = new TvShowAdapter(getActivity());
-        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.rv_category2);
+    public View onCreateView(@NonNull LayoutInflater inflateLayout, ViewGroup viewGroup, Bundle instanceSaved) {
+
+        return inflateLayout.inflate(R.layout.fragment_dashboard, viewGroup, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View viewHandler, @Nullable Bundle insatnaceSaved) {
+        super.onViewCreated(viewHandler, insatnaceSaved);
+
+        myTvShowAdapter = new TvShowAdapter(getActivity());
+        RecyclerView recyclerView = viewHandler.findViewById(R.id.rv_category2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerView.setAdapter(tvShowAdapter);
+        recyclerView.setAdapter(myTvShowAdapter);
 
-        TvShowServiceImpl tvShowViewModel = ViewModelProviders.of(this).get(TvShowServiceImpl.class);
-        tvShowViewModel.getTvShow().observe(this, getTvShow);
-        tvShowViewModel.setTvShow(Objects.requireNonNull(this.getContext()));
-
-        progressBar = view.findViewById(R.id.progressBarTv);
-        progressBar.bringToFront();
+        myProgressBar = viewHandler.findViewById(R.id.progressBarTv);
+        myProgressBar.bringToFront();
 
         showLoading();
 
-        return view;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle instanceSaved) {
+        super.onActivityCreated(instanceSaved);
 
-        tvShowImplService.getTvShow().observe(Objects.requireNonNull(getActivity()), getTvShow);
-        tvShowImplService.setSearchTvWhenSearch(paramSearch, Objects.requireNonNull(this.getContext()));
+        myTvShowServiceImpl.getTvShow().observe(Objects.requireNonNull(getActivity()), getTvShow);
+        myTvShowServiceImpl.setSearchTvWhenSearch(paramSearch, Objects.requireNonNull(this.getContext()));
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
-        tvShowImplService.getTvShow().removeObserver(getTvShow);
+        myTvShowServiceImpl.getTvShow().removeObserver(getTvShow);
     }
 }

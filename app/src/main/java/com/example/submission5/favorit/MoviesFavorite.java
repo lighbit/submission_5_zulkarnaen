@@ -19,34 +19,34 @@ import java.util.ArrayList;
  * @author zulkarnaen
  */
 public class MoviesFavorite extends AppCompatActivity {
-    private ArrayList<Movies> list = new ArrayList<>();
+    private ArrayList<Movies> listMovie = new ArrayList<>();
 
 
     /*Create on Create when Favorite call*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_movie_favorit);
+        setContentView(R.layout.fragment_home);
 
         /*Open Database*/
         MovieFavoriteHelper movieFavoriteHelper = MovieFavoriteHelper.getInstance(getApplicationContext());
         movieFavoriteHelper.openDatabase();
 
-        /*Create Array*/
+        /*Create Array listMovie*/
         WeakReference<MovieFavoriteHelper> weakReference = new WeakReference<>(movieFavoriteHelper);
         ArrayList<Movies> arrayList = weakReference.get().getAllMoviesFavorite();
 
-        RecyclerView rvCategory = findViewById(R.id.rv_category_favorite);
+        RecyclerView rvCategory = findViewById(R.id.rv_category);
         rvCategory.setHasFixedSize(true);
 
 
-        list.addAll(arrayList);
+        listMovie.addAll(arrayList);
 
         /*Set new layout*/
         rvCategory.setLayoutManager(new LinearLayoutManager(this));
         MoviesAdapter movieAdapter = new MoviesAdapter(this);
         movieAdapter.setWordMovies(getResources().getString(R.string.choose));
-        movieAdapter.setDataMovies(list);
+        movieAdapter.setDataMovies(listMovie);
         movieAdapter.isOnFavoriteMovies(true);
         rvCategory.setAdapter(movieAdapter);
 

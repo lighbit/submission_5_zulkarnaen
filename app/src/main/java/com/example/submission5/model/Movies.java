@@ -13,7 +13,6 @@ public class Movies implements Parcelable {
 
     private int id;
     private boolean isOnfavorites;
-
     private String original_title;
     private String vote_average;
     private String overview;

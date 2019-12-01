@@ -20,7 +20,7 @@ import static com.example.submission5.database.DatabaseContract.MovieFavColumns.
 import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_PHOTO;
 import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_TABLE_NAME;
 import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_TITLE;
-import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_VOTE_AVARAGE;
+import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_VOTE_AVERAGE;
 import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_VOTE_COUNT;
 
 /**
@@ -83,7 +83,7 @@ public class MovieFavoriteHelper {
                 movieFavorite = new Movies();
                 movieFavorite.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
                 movieFavorite.setOriginal_title(cursor.getString(cursor.getColumnIndexOrThrow(MOVIE_TITLE)));
-                movieFavorite.setVote_average(cursor.getString(cursor.getColumnIndexOrThrow(MOVIE_VOTE_AVARAGE)));
+                movieFavorite.setVote_average(cursor.getString(cursor.getColumnIndexOrThrow(MOVIE_VOTE_AVERAGE)));
                 movieFavorite.setVote_count(cursor.getString(cursor.getColumnIndexOrThrow(MOVIE_VOTE_COUNT)));
                 movieFavorite.setRelease_date(cursor.getString(cursor.getColumnIndexOrThrow(MOVIE_FIRST_AIR_DATE)));
                 movieFavorite.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(MOVIE_OVERVIEW)));
@@ -105,7 +105,7 @@ public class MovieFavoriteHelper {
             ContentValues args = new ContentValues();
             args.put(_ID, movieFavorite.getId());
             args.put(MOVIE_TITLE, movieFavorite.getOriginal_title());
-            args.put(MOVIE_VOTE_AVARAGE, movieFavorite.getVote_average());
+            args.put(MOVIE_VOTE_AVERAGE, movieFavorite.getVote_average());
             args.put(MOVIE_VOTE_COUNT, movieFavorite.getVote_count());
             args.put(MOVIE_FIRST_AIR_DATE, movieFavorite.getRelease_date());
             args.put(MOVIE_OVERVIEW, movieFavorite.getOverview());
@@ -116,7 +116,6 @@ public class MovieFavoriteHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         return 0;
     }

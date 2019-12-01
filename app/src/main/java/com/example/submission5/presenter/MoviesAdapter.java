@@ -30,12 +30,12 @@ import java.util.ArrayList;
  */
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CategoryViewHolder> {
 
-    private Context context;
-    private ArrayList<Movies> mData = new ArrayList<>();
+    private Context myContext;
+    private ArrayList<Movies> myMovieData = new ArrayList<>();
 
     /*get Data Movies*/
     private ArrayList<Movies> getDataMovies() {
-        return mData;
+        return myMovieData;
     }
 
     private boolean isFavorite;
@@ -53,21 +53,21 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CategoryVi
     }
 
     /*set Context*/
-    public MoviesAdapter(Context context) {
-        this.context = context;
+    public MoviesAdapter(Context myContext) {
+        this.myContext = myContext;
     }
 
     /*set New Data Movies if not available*/
     public void setDataMovies(ArrayList<Movies> items) {
-        mData.clear();
-        mData.addAll(items);
+        myMovieData.clear();
+        myMovieData.addAll(items);
         notifyDataSetChanged();
     }
 
     /*counting*/
     @Override
     public int getItemCount() {
-        return mData.size();
+        return myMovieData.size();
     }
 
 
@@ -97,15 +97,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CategoryVi
 
     /*on Bind View Holder*/
     @Override
-    public void onBindViewHolder(@NonNull final CategoryViewHolder categoryViewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final CategoryViewHolder viewHolderCategory, final int i) {
 
-        categoryViewHolder.ttvTitle.setText(getDataMovies().get(i).getOriginal_title());
-        categoryViewHolder.tvRelease.setText(getDataMovies().get(i).getRelease_date());
-        categoryViewHolder.tvOverview.setText(getDataMovies().get(i).getOverview());
-        categoryViewHolder.tvVoteCount.setText(getDataMovies().get(i).getVote_count());
+        viewHolderCategory.ttvTitle.setText(getDataMovies().get(i).getOriginal_title());
+        viewHolderCategory.tvRelease.setText(getDataMovies().get(i).getRelease_date());
+        viewHolderCategory.tvOverview.setText(getDataMovies().get(i).getOverview());
+        viewHolderCategory.tvVoteCount.setText(getDataMovies().get(i).getVote_count());
 
         String uri = "https://image.tmdb.org/t/p/original" + getDataMovies().get(i).getPoster_path();
-        Glide.with(categoryViewHolder.itemView.getContext())
+        Glide.with(viewHolderCategory.itemView.getContext())
                 .load(uri)
                 .listener(new RequestListener<Drawable>() {
                     @Override
@@ -118,14 +118,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CategoryVi
                         return false;
                     }
                 })
-                .into(categoryViewHolder.imgPhoto);
+                .into(viewHolderCategory.imgPhoto);
 
-        categoryViewHolder.itemView.setOnClickListener(new CustomOnItemClickListener(i, new CustomOnItemClickListener.OnItemClickCallback() {
+        viewHolderCategory.itemView.setOnClickListener(new CustomItemListenerClick(i, new CustomItemListenerClick.OnItemClickCallback() {
             /*Call Data when Data in Click*/
             @Override
             public void onItemClicked(View view, int position) {
-                Toast.makeText(context, word + " " + getDataMovies().get(position).getOriginal_title(), Toast.LENGTH_SHORT).show();
-                Intent move = new Intent(context, MoviesDetailActivity.class);
+                Toast.makeText(myContext, word + " " + getDataMovies().get(position).getOriginal_title(), Toast.LENGTH_SHORT).show();
+                Intent move = new Intent(myContext, MoviesDetailActivity.class);
                 Movies movie = new Movies();
                 movie.setOriginal_title(getDataMovies().get(i).getOriginal_title());
                 movie.setVote_average(getDataMovies().get(i).getVote_average());
@@ -136,9 +136,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CategoryVi
                 movie.setOnfavorites(isFavorite);
 
                 move.putExtra(MoviesDetailActivity.EXTRA_MOVIE, movie);
-                move.putExtra(MoviesDetailActivity.EXTRA_POSITION, getDataMovies().get(i).getId());
+                move.putExtra(MoviesDetailActivity.EXTRA_POSITION_DEFAULT, getDataMovies().get(i).getId());
 
-                context.startActivity(move);
+                myContext.startActivity(move);
             }
         }));
 

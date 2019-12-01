@@ -18,7 +18,7 @@ import static com.example.submission5.database.DatabaseContract.TVFavColumns.TV_
 import static com.example.submission5.database.DatabaseContract.TVFavColumns.TV_PHOTO;
 import static com.example.submission5.database.DatabaseContract.TVFavColumns.TV_TABLE_NAME;
 import static com.example.submission5.database.DatabaseContract.TVFavColumns.TV_TITLE;
-import static com.example.submission5.database.DatabaseContract.TVFavColumns.TV_VOTE_AVARAGE;
+import static com.example.submission5.database.DatabaseContract.TVFavColumns.TV_VOTE_AVERAGE;
 import static com.example.submission5.database.DatabaseContract.TVFavColumns.TV_VOTE_COUNT;
 
 
@@ -75,7 +75,7 @@ public class TVShowFavoriteHelper {
                 tvShowFavorite = new TvShow();
                 tvShowFavorite.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
                 tvShowFavorite.setOriginal_name(cursor.getString(cursor.getColumnIndexOrThrow(TV_TITLE)));
-                tvShowFavorite.setVote_average(cursor.getString(cursor.getColumnIndexOrThrow(TV_VOTE_AVARAGE)));
+                tvShowFavorite.setVote_average(cursor.getString(cursor.getColumnIndexOrThrow(TV_VOTE_AVERAGE)));
                 tvShowFavorite.setVote_count(cursor.getString(cursor.getColumnIndexOrThrow(TV_VOTE_COUNT)));
                 tvShowFavorite.setFirst_air_date(cursor.getString(cursor.getColumnIndexOrThrow(TV_FIRST_AIR_DATE)));
                 tvShowFavorite.setPoster_path(cursor.getString(cursor.getColumnIndexOrThrow(TV_PHOTO)));
@@ -94,7 +94,7 @@ public class TVShowFavoriteHelper {
         ContentValues args = new ContentValues();
         args.put(BaseColumns._ID, tvShowFavorite.getId());
         args.put(TV_TITLE, tvShowFavorite.getOriginal_name());
-        args.put(TV_VOTE_AVARAGE, tvShowFavorite.getVote_average());
+        args.put(TV_VOTE_AVERAGE, tvShowFavorite.getVote_average());
         args.put(TV_VOTE_COUNT, tvShowFavorite.getVote_count());
         args.put(TV_FIRST_AIR_DATE, tvShowFavorite.getFirst_air_date());
         args.put(TV_PHOTO, tvShowFavorite.getPoster_path());

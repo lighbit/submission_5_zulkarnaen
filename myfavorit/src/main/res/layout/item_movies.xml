@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,13 +14,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="318dp"
         android:background="@drawable/rounded">
 
         <ImageView
             android:id="@+id/img_photo"
-            android:layout_width="98dp"
-            android:layout_height="167dp"
+            android:layout_width="115dp"
+            android:layout_height="219dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -28,7 +29,8 @@
             android:src="@drawable/pikachu"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent" />
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/txt_name"
@@ -56,7 +58,7 @@
             android:layout_marginBottom="8dp"
             android:layout_toEndOf="@id/img_photo"
             android:ellipsize="end"
-            android:maxLines="4"
+            android:maxLines="5"
             android:text="@string/lorem"
             card_view:layout_constraintBottom_toTopOf="@+id/txt_genres"
             card_view:layout_constraintEnd_toEndOf="@+id/txt_name"
@@ -123,5 +125,48 @@
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/txt_tahun2"
             card_view:layout_constraintTop_toTopOf="@+id/txt_tahun2" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="75dp"
+            android:layout_height="69dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/img_photo"
+            card_view:srcCompat="@drawable/ic_stars_black_24dp" />
+
+        <TextView
+            android:id="@+id/rate"
+            android:layout_width="85dp"
+            android:layout_height="61dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/rate1"
+            android:textAlignment="center"
+            android:textSize="18pt"
+            android:textStyle="italic"
+            card_view:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            card_view:layout_constraintStart_toEndOf="@+id/imageView2"
+            card_view:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+        <TextView
+            android:id="@+id/suggest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="25dp"
+            android:maxLines="2"
+            android:text="@string/suggest"
+            android:textAlignment="center"
+            android:textSize="8pt"
+            card_view:layout_constraintBottom_toBottomOf="@+id/rate"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@+id/rate"
+            card_view:layout_constraintTop_toTopOf="@+id/rate" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -1,4 +1,21 @@
 <resources>
-    <string name="app_name">MyFavorit</string>
+    <string name="app_name">My Favorite Movie</string>
+    <string name="todo_photo_movie">photo</string>
+    <string name="name_heroes">Movies Name</string>
+    <string name="lorem">Description</string>
+    <string name="vote">Vote</string>
+    <string name="action">..</string>
+    <string name="tahun">Release</string>
+    <string name="tahun_pembuatan">..</string>
+    <string name="app_name_tvshow">TV Show Name</string>
+    <string name="title_movie">Movies</string>
+    <string name="title_tv_show">TV Show</string>
+    <string name="title_home">default</string>
+    <string name="rate">Rate</string>
+    <string name="rate1">9.4</string>
+    <string name="suggest">Suggest</string>
+    <string name="bad">hey o, mehh.. don\'t watch it</string>
+    <string name="good">hey o, watch this film</string>
+    <string name="awesome">hey o, you must watch!!</string>
 
 </resources>

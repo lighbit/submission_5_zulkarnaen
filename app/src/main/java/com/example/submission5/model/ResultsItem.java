@@ -4,15 +4,11 @@ import android.database.Cursor;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.jetbrains.annotations.NotNull;
-
-import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_FIRST_AIR_DATE;
-import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_OVERVIEW;
+import static android.provider.BaseColumns._ID;
 import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_PHOTO;
 import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_TITLE;
-import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_VOTE_AVARAGE;
-import static com.example.submission5.database.DatabaseContract.MovieFavColumns.MOVIE_VOTE_COUNT;
-import static com.example.submission5.database.DatabaseContract.getColumnString;
+import static com.example.submission5.database.DatabaseContract.getInt;
+import static com.example.submission5.database.DatabaseContract.getString;
 
 /**
  * @author zulkarnaen
@@ -22,21 +18,10 @@ public class ResultsItem {
 
     @SerializedName("original_title")
     private String original_title;
-
-    @SerializedName("vote_average")
-    private String vote_average;
-
-    @SerializedName("release_date")
-    private String release_date;
-
     @SerializedName("poster_path")
     private String poster_path;
-
-    @SerializedName("vote_count")
-    private String vote_count;
-
-    @SerializedName("overview")
-    private String overview;
+    @SerializedName("id")
+    private int id;
 
     public String getOriginal_title() {
         return original_title;
@@ -44,10 +29,6 @@ public class ResultsItem {
 
     public void setOriginal_title(String original_title) {
         this.original_title = original_title;
-    }
-
-    public void setVote_average(String vote_average) {
-        this.vote_average = vote_average;
     }
 
     public String getPoster_path() {
@@ -58,38 +39,21 @@ public class ResultsItem {
         this.poster_path = poster_path;
     }
 
-    public void setVote_count(String vote_count) {
-        this.vote_count = vote_count;
-    }
 
     public ResultsItem() {
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public ResultsItem(Cursor cursor) {
-        this.original_title = getColumnString(cursor, MOVIE_TITLE);
-        this.vote_average = getColumnString(cursor, MOVIE_VOTE_AVARAGE);
-        this.vote_count = getColumnString(cursor, MOVIE_VOTE_COUNT);
-        this.overview = getColumnString(cursor, MOVIE_OVERVIEW);
-        this.poster_path = getColumnString(cursor, MOVIE_PHOTO);
-        this.release_date = getColumnString(cursor, MOVIE_FIRST_AIR_DATE);
+        this.id = getInt(cursor, _ID);
+        this.original_title = getString(cursor, MOVIE_TITLE);
+        this.poster_path = getString(cursor, MOVIE_PHOTO);
     }
-
-    @NotNull
-    @Override
-    public String toString() {
-        return
-                "ResultsItem{" +
-                        "overview = '" + overview + '\'' +
-                        ",original_title = '" + original_title + '\'' +
-                        ",poster_path = '" + poster_path + '\'' +
-                        ",vote_average = '" + vote_average + '\'' +
-                        ",vote_count = '" + vote_count + '\'' +
-                        ",release_date = '" + release_date + '\'' +
-                        "}";
-    }
-
 }

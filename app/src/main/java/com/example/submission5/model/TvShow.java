@@ -110,22 +110,14 @@ public class TvShow implements Parcelable {
 
     public TvShow(JSONObject object) {
         try {
-            int id = object.getInt("id");
-            String original_names = object.getString("original_name");
-            String vote_counts = object.getString("vote_count");
-            String vote_averages = object.getString("vote_average");
-            String first_air_dates = object.getString("first_air_date");
-            String poster_path = object.getString("poster_path");
-            String overview = object.getString("overview");
 
-            this.id = id;
-            this.original_name = original_names;
-            this.vote_average = vote_averages;
-            this.vote_count = vote_counts;
-            this.first_air_date = first_air_dates;
-            this.poster_path = poster_path;
-            this.overview = overview;
-
+            this.id = object.getInt("id");
+            this.original_name = object.getString("original_name");
+            this.vote_average = object.getString("vote_count");
+            this.vote_count = object.getString("vote_count");
+            this.first_air_date = object.getString("first_air_date");
+            this.poster_path = object.getString("poster_path");
+            this.overview = object.getString("overview");
 
         } catch (Exception e) {
             e.printStackTrace();

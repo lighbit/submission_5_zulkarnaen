@@ -28,22 +28,23 @@ import com.example.submission5.model.TvShow;
  * @author zulkarnaen
  */
 public class TVShowDetailActivity extends AppCompatActivity implements View.OnClickListener {
+
     TextView original_name, vote_count, vote_average, first_air_date, overview;
     ImageView imagePhoto;
     String urlPhoto;
+    Button btnSaveTV, btnDeleteTv;
 
     public static final String EXTRA_TV_SHOW = "extra_tv";
     public static final String EXTRA_TV_FAVORITE = "extra_tv_favorite";
-    public static final String EXTRA_POSITION = "extra_position";
+    public static final String EXTRA_POSITION_DEFAULT = "extra_position";
 
-    private TvShow tvShowFavorite;
-    private ProgressBar progressBar;
-    private int flag, position;
+    private TvShow myFavoriteTvShow;
+    private ProgressBar myProgressBar;
+    private int flags, positionDefault;
     private boolean isFav = false;
     public static final int RESULT_ADD = 101;
 
-    private TVShowFavoriteHelper tvShowFavoriteHelper;
-    Button btnSaveTV, btnDeleteTv;
+    private TVShowFavoriteHelper myFavoriteTvShowHelper;
 
 
     @Override
@@ -52,19 +53,19 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_detail_tv_show);
 
         final TvShow tvShow = getIntent().getParcelableExtra(EXTRA_TV_SHOW);
-        position = getIntent().getIntExtra(EXTRA_POSITION, 0);
+        positionDefault = getIntent().getIntExtra(EXTRA_POSITION_DEFAULT, 0);
 
-        tvShowFavoriteHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
-        tvShowFavoriteHelper.open();
+        myFavoriteTvShowHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
+        myFavoriteTvShowHelper.open();
 
-        tvShowFavorite = getIntent().getParcelableExtra(EXTRA_TV_SHOW);
+        myFavoriteTvShow = getIntent().getParcelableExtra(EXTRA_TV_SHOW);
 
 
         assert tvShow != null;
         if (tvShow.isOnfavorites()) {
 
-            progressBar = findViewById(R.id.progressDetailMovie);
-            progressBar.setVisibility(View.INVISIBLE);
+            myProgressBar = findViewById(R.id.progressDetailMovie);
+            myProgressBar.setVisibility(View.INVISIBLE);
 
             original_name = findViewById(R.id.txt_name);
             original_name.setText(tvShow.getOriginal_name());
@@ -106,11 +107,11 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
             btnDeleteTv.setOnClickListener(this);
 
             if (tvShow.isOnfavorites()) {
-                flag = getIntent().getIntExtra(EXTRA_POSITION, 0);
+                flags = getIntent().getIntExtra(EXTRA_POSITION_DEFAULT, 0);
                 isFav = true;
                 btnSaveTV.setVisibility(View.GONE);
             } else {
-                tvShowFavorite = new TvShow();
+                myFavoriteTvShow = new TvShow();
                 btnDeleteTv.setVisibility(View.GONE);
             }
 
@@ -146,19 +147,19 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
                                     .dontAnimate()
                                     .into(imagePhoto);
 
-                            progressBar.setVisibility(View.INVISIBLE);
+                            myProgressBar.setVisibility(View.INVISIBLE);
 
-                            tvShowFavoriteHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
-                            tvShowFavoriteHelper.open();
+                            myFavoriteTvShowHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
+                            myFavoriteTvShowHelper.open();
 
-                            tvShowFavorite = getIntent().getParcelableExtra(EXTRA_TV_FAVORITE);
+                            myFavoriteTvShow = getIntent().getParcelableExtra(EXTRA_TV_FAVORITE);
                             if (tvShow.isOnfavorites()) {
-                                flag = getIntent().getIntExtra(EXTRA_POSITION, 0);
+                                flags = getIntent().getIntExtra(EXTRA_POSITION_DEFAULT, 0);
                                 isFav = true;
                                 btnSaveTV.setVisibility(View.GONE);
 
                             } else {
-                                tvShowFavorite = new TvShow();
+                                myFavoriteTvShow = new TvShow();
                                 btnDeleteTv.setVisibility(View.GONE);
                             }
 
@@ -174,8 +175,8 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
             vote_count = findViewById(R.id.tv_vote_count);
             imagePhoto = findViewById(R.id.img_photo);
 
-            progressBar = findViewById(R.id.progressDetailMovie);
-            progressBar.setVisibility(View.VISIBLE);
+            myProgressBar = findViewById(R.id.progressDetailMovie);
+            myProgressBar.setVisibility(View.VISIBLE);
 
             btnSaveTV = findViewById(R.id.btn_submit);
             btnSaveTV.setOnClickListener(this);
@@ -184,11 +185,11 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
             btnDeleteTv.setOnClickListener(this);
 
             if (tvShow.isOnfavorites()) {
-                flag = getIntent().getIntExtra(EXTRA_POSITION, 0);
+                flags = getIntent().getIntExtra(EXTRA_POSITION_DEFAULT, 0);
                 isFav = true;
                 btnSaveTV.setVisibility(View.GONE);
             } else {
-                tvShowFavorite = new TvShow();
+                myFavoriteTvShow = new TvShow();
                 btnDeleteTv.setVisibility(View.GONE);
             }
         }
@@ -206,25 +207,25 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
 
             String url_image = urlPhoto.trim();
 
-            tvShowFavorite.setId(position);
-            tvShowFavorite.setOriginal_name(title);
-            tvShowFavorite.setVote_average(vote);
-            tvShowFavorite.setVote_count(vote_counts);
-            tvShowFavorite.setOverview(overviews);
-            tvShowFavorite.setFirst_air_date(release);
+            myFavoriteTvShow.setId(positionDefault);
+            myFavoriteTvShow.setOriginal_name(title);
+            myFavoriteTvShow.setVote_average(vote);
+            myFavoriteTvShow.setVote_count(vote_counts);
+            myFavoriteTvShow.setOverview(overviews);
+            myFavoriteTvShow.setFirst_air_date(release);
 
-            tvShowFavorite.setPoster_path(url_image);
+            myFavoriteTvShow.setPoster_path(url_image);
 
             Intent intent = new Intent();
-            intent.putExtra(EXTRA_TV_FAVORITE, tvShowFavorite);
-            intent.putExtra(EXTRA_POSITION, flag);
+            intent.putExtra(EXTRA_TV_FAVORITE, myFavoriteTvShow);
+            intent.putExtra(EXTRA_POSITION_DEFAULT, flags);
 
             if (!isFav) {
 
-                long result = tvShowFavoriteHelper.insertTv(tvShowFavorite);
+                long result = myFavoriteTvShowHelper.insertTv(myFavoriteTvShow);
 
                 if (result > 0) {
-                    tvShowFavorite.setId((int) result);
+                    myFavoriteTvShow.setId((int) result);
                     setResult(RESULT_ADD, intent);
                     Toast.makeText(TVShowDetailActivity.this, getString(R.string.succes_add_data_tv), Toast.LENGTH_SHORT).show();
                     finish();
@@ -234,8 +235,8 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
             }
 
         } else if (view.getId() == R.id.btn_delete) {
-            tvShowFavoriteHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
-            long result = tvShowFavoriteHelper.deleteTv(position);
+            myFavoriteTvShowHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
+            long result = myFavoriteTvShowHelper.deleteTv(positionDefault);
             if (result > 0) {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);

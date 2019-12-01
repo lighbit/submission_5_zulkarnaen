@@ -31,8 +31,8 @@ import java.util.ArrayList;
  */
 public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.CategoryViewHolder> {
 
-    private Context context;
-    private ArrayList<TvShow> tvShowData = new ArrayList<>();
+    private Context myContext;
+    private ArrayList<TvShow> myTvShowData = new ArrayList<>();
 
     private String word;
 
@@ -47,22 +47,22 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.CategoryVi
     }
 
     private ArrayList<TvShow> getDataTvShow() {
-        return tvShowData;
+        return myTvShowData;
     }
 
-    public TvShowAdapter(Context context) {
-        this.context = context;
+    public TvShowAdapter(Context myContext) {
+        this.myContext = myContext;
     }
 
-    public void setDataTvshow(ArrayList<TvShow> items) {
-        tvShowData.clear();
-        tvShowData.addAll(items);
+    public void setDataTvShow(ArrayList<TvShow> items) {
+        myTvShowData.clear();
+        myTvShowData.addAll(items);
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return tvShowData.size();
+        return myTvShowData.size();
     }
 
 
@@ -89,17 +89,17 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.CategoryVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final TvShowAdapter.CategoryViewHolder categoryViewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final TvShowAdapter.CategoryViewHolder viewHolderCategory, final int i) {
 
 
-        categoryViewHolder.tv_title.setText(getDataTvShow().get(i).getOriginal_name());
-        categoryViewHolder.tv_counts.setText(getDataTvShow().get(i).getVote_count());
-        categoryViewHolder.tv_first_air_dates.setText(getDataTvShow().get(i).getFirst_air_date());
-        categoryViewHolder.tv_overview.setText(getDataTvShow().get(i).getOverview());
+        viewHolderCategory.tv_title.setText(getDataTvShow().get(i).getOriginal_name());
+        viewHolderCategory.tv_counts.setText(getDataTvShow().get(i).getVote_count());
+        viewHolderCategory.tv_first_air_dates.setText(getDataTvShow().get(i).getFirst_air_date());
+        viewHolderCategory.tv_overview.setText(getDataTvShow().get(i).getOverview());
 
         String uri = "https://image.tmdb.org/t/p/original" + getDataTvShow().get(i).getPoster_path();
 
-        Glide.with(categoryViewHolder.itemView.getContext())
+        Glide.with(viewHolderCategory.itemView.getContext())
                 .load(uri)
                 .listener(new RequestListener<Drawable>() {
                     @Override
@@ -112,13 +112,13 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.CategoryVi
                         return false;
                     }
                 })
-                .into(categoryViewHolder.tv_photo);
+                .into(viewHolderCategory.tv_photo);
 
-        categoryViewHolder.itemView.setOnClickListener(new CustomOnItemClickListener(i, new CustomOnItemClickListener.OnItemClickCallback() {
+        viewHolderCategory.itemView.setOnClickListener(new CustomItemListenerClick(i, new CustomItemListenerClick.OnItemClickCallback() {
             @Override
             public void onItemClicked(View view, int position) {
-                Toast.makeText(context, word + " " + getDataTvShow().get(position).getOriginal_name(), Toast.LENGTH_SHORT).show();
-                Intent move = new Intent(context, TVShowDetailActivity.class);
+                Toast.makeText(myContext, word + " " + getDataTvShow().get(position).getOriginal_name(), Toast.LENGTH_SHORT).show();
+                Intent move = new Intent(myContext, TVShowDetailActivity.class);
                 TvShow tv = new TvShow();
 
                 tv.setOriginal_name(getDataTvShow().get(i).getOriginal_name());
@@ -130,8 +130,8 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.CategoryVi
                 tv.setOnfavorites(isFavorite);
 
                 move.putExtra(TVShowDetailActivity.EXTRA_TV_SHOW, tv);
-                move.putExtra(TVShowDetailActivity.EXTRA_POSITION, getDataTvShow().get(i).getId());
-                context.startActivity(move);
+                move.putExtra(TVShowDetailActivity.EXTRA_POSITION_DEFAULT, getDataTvShow().get(i).getId());
+                myContext.startActivity(move);
             }
         }));
     }

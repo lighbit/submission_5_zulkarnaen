@@ -8,10 +8,6 @@ import android.preference.SwitchPreference;
 import android.provider.Settings;
 
 import com.example.submission5.R;
-import com.example.submission5.model.ResultsItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author zulkarnaen
@@ -21,12 +17,12 @@ public class MenuSetting extends AppCompatService {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new MainPreferenceFragment()).commit();
+        getFragmentManager().beginTransaction().replace(android.R.id.content, new MainFragmentPreference()).commit();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
-    public static class MainPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
+    public static class MainFragmentPreference extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
         /*Reminder for Upcoming Movies*/
         DailyUpcomingMovies dailyUpcomingMovies = new DailyUpcomingMovies();
@@ -35,8 +31,6 @@ public class MenuSetting extends AppCompatService {
         /*Change Reminder*/
         SwitchPreference changeReminder;
         SwitchPreference changeReminderToday;
-        /*throw notification Listing to result item*/
-        List<ResultsItem> notificationListing;
 
         /*function if some change in user*/
         @Override
@@ -45,16 +39,15 @@ public class MenuSetting extends AppCompatService {
             boolean value = (boolean) newValue;
             if (key.equals(getString(R.string.today_reminder))) {
                 if (value) {
-                    dailyPushNotificationForMovies.setAlarm(getActivity());
+                    dailyPushNotificationForMovies.setMyAlarm(getActivity());
                 } else {
-                    dailyPushNotificationForMovies.cancelAlarm(getActivity());
+                    dailyPushNotificationForMovies.cancelMyAlarm(getActivity());
                 }
             } else {
                 if (value) {
-
-                    dailyUpcomingMovies.settingAlarm(getActivity());
+                    dailyUpcomingMovies.setMyAlarm(getActivity());
                 } else {
-                    dailyUpcomingMovies.cancelAlarm(getActivity());
+                    dailyUpcomingMovies.cancelMyAlarm(getActivity());
                 }
             }
             return true;
@@ -67,8 +60,7 @@ public class MenuSetting extends AppCompatService {
 
             /*merubah notifikasi on atau off pada menu setting*/
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.main_pref);
-            notificationListing = new ArrayList<>();
+            addPreferencesFromResource(R.xml.main_menu_settings);
             changeReminder = (SwitchPreference) findPreference(getString(R.string.today_reminder));
             changeReminder.setOnPreferenceChangeListener(this);
             changeReminderToday = (SwitchPreference) findPreference(getString(R.string.key_release_reminder));

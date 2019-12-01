@@ -26,8 +26,8 @@ import java.util.Objects;
  * @author zulkarnaen
  */
 public class MainActivity extends AppCompatActivity {
-    public static final String INTENT_SEARCH = "intent_search";
-    private int flagFavorite = 1;
+    public static final String MY_INTENT_SEARCH = "intent_search";
+    private int myFlagFavorite = 1;
 
     /*on Create with bottom navigation*/
     @Override
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                             .replace(R.id.nav_host_fragment, fragment, fragment.getClass().getSimpleName())
                             .commit();
                     Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_name_movie);
-                    flagFavorite = 1;
+                    myFlagFavorite = 1;
                     return true;
                 case R.id.navigation_tv:
                     fragment = new TVShowFragment();
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                             .replace(R.id.nav_host_fragment, fragment, fragment.getClass().getSimpleName())
                             .commit();
                     Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_name_tvshow);
-                    flagFavorite = 2;
+                    myFlagFavorite = 2;
                     return true;
             }
             return false;
@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
 
                 Fragment fragment;
-                if (flagFavorite == 1) {
+                if (myFlagFavorite == 1) {
                     fragment = new SearchActivityMoviesFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putString(INTENT_SEARCH, query);
+                    bundle.putString(MY_INTENT_SEARCH, query);
 
                     fragment.setArguments(bundle);
 
@@ -94,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
                             .replace(R.id.nav_host_fragment, fragment, fragment.getClass().getSimpleName())
                             .commit();
 
-                } else if (flagFavorite == 2) {
+                } else if (myFlagFavorite == 2) {
                     fragment = new SearchActivityTvShowFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putString(INTENT_SEARCH, query);
+                    bundle.putString(MY_INTENT_SEARCH, query);
 
                     fragment.setArguments(bundle);
 
@@ -124,12 +124,12 @@ public class MainActivity extends AppCompatActivity {
             Intent mIntent = new Intent(this, MenuSetting.class);
             startActivity(mIntent);
         } else if (item.getItemId() == R.id.love) {
-            if (flagFavorite == 1) {
+            if (myFlagFavorite == 1) {
                 Intent intent = new Intent(this, MoviesFavorite.class);
                 startActivity(intent);
                 Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_name_movie);
                 Toast.makeText(this, R.string.text_favorit_movie, Toast.LENGTH_SHORT).show();
-            } else if (flagFavorite == 2) {
+            } else if (myFlagFavorite == 2) {
                 Intent intent = new Intent(this, TvShowFavorite.class);
                 startActivity(intent);
                 Toast.makeText(this, R.string.text_favorit_tvShow, Toast.LENGTH_SHORT).show();

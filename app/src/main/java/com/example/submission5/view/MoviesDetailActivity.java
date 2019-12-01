@@ -36,14 +36,14 @@ public class MoviesDetailActivity extends AppCompatActivity implements View.OnCl
 
     public static final String EXTRA_MOVIE = "extra_movie";
     public static final String EXTRA_MOVIE_FAVORITE = "extra_movie_favorite";
-    public static final String EXTRA_POSITION = "extra_position";
+    public static final String EXTRA_POSITION_DEFAULT = "extra_position";
 
-    private ProgressBar progressBar;
-    private Movies movieFavorite;
-    private MovieFavoriteHelper movieFavoriteHelper;
-    private boolean isFav = false;
-    public static final int RESULT_ADD = 101;
-    private int flag, position;
+    private ProgressBar myProgressBar;
+    private Movies myMovieFavorite;
+    private MovieFavoriteHelper myMovieFavoriteHelper;
+    private boolean isFavorite = false;
+    public static final int ADD_RESULT = 101;
+    private int flags, positionDefault;
 
 
     /*Create On Create*/
@@ -53,21 +53,21 @@ public class MoviesDetailActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_move_with_object);
 
         final Movies myMovies = getIntent().getParcelableExtra(EXTRA_MOVIE);
-        position = getIntent().getIntExtra(EXTRA_POSITION, 0);
+        positionDefault = getIntent().getIntExtra(EXTRA_POSITION_DEFAULT, 0);
 
         /*Open Database*/
-        movieFavoriteHelper = MovieFavoriteHelper.getInstance(getApplicationContext());
-        movieFavoriteHelper.openDatabase();
+        myMovieFavoriteHelper = MovieFavoriteHelper.getInstance(getApplicationContext());
+        myMovieFavoriteHelper.openDatabase();
 
-        movieFavorite = getIntent().getParcelableExtra(EXTRA_MOVIE_FAVORITE);
+        myMovieFavorite = getIntent().getParcelableExtra(EXTRA_MOVIE_FAVORITE);
 
         /*if favorite is true*/
         assert myMovies != null;
         if (myMovies.isOnfavorites()) {
 
             /*Set to the layout*/
-            progressBar = findViewById(R.id.progressDetailMovie);
-            progressBar.setVisibility(View.INVISIBLE);
+            myProgressBar = findViewById(R.id.progressDetailMovie);
+            myProgressBar.setVisibility(View.INVISIBLE);
 
             original_title = findViewById(R.id.original_title);
             original_title.setText(myMovies.getOriginal_title());
@@ -97,7 +97,7 @@ public class MoviesDetailActivity extends AppCompatActivity implements View.OnCl
 
                         @Override
                         public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                        progressBar.setVisibility(View.GONE);
+//                        myProgressBar.setVisibility(View.GONE);
                             return false;
                         }
                     })
@@ -110,11 +110,11 @@ public class MoviesDetailActivity extends AppCompatActivity implements View.OnCl
             btnDeleteMovie.setOnClickListener(this);
 
             if (myMovies.isOnfavorites()) {
-                flag = getIntent().getIntExtra(EXTRA_POSITION, 0);
-                isFav = true;
+                flags = getIntent().getIntExtra(EXTRA_POSITION_DEFAULT, 0);
+                isFavorite = true;
                 btnSaveMovie.setVisibility(View.GONE);
             } else {
-                movieFavorite = new Movies();
+                myMovieFavorite = new Movies();
                 btnDeleteMovie.setVisibility(View.GONE);
             }
         } else {
@@ -145,7 +145,7 @@ public class MoviesDetailActivity extends AppCompatActivity implements View.OnCl
                                     .placeholder(R.color.colorAccent)
                                     .dontAnimate()
                                     .into(poster_path);
-                            progressBar.setVisibility(View.INVISIBLE);
+                            myProgressBar.setVisibility(View.INVISIBLE);
 
                         }
                     });
@@ -159,8 +159,8 @@ public class MoviesDetailActivity extends AppCompatActivity implements View.OnCl
             vote_count = findViewById(R.id.vote_count);
             poster_path = findViewById(R.id.poster_path);
 
-            progressBar = findViewById(R.id.progressDetailMovie);
-            progressBar.setVisibility(View.VISIBLE);
+            myProgressBar = findViewById(R.id.progressDetailMovie);
+            myProgressBar.setVisibility(View.VISIBLE);
 
             btnSaveMovie = findViewById(R.id.btn_submits);
             btnSaveMovie.setOnClickListener(this);
@@ -169,12 +169,12 @@ public class MoviesDetailActivity extends AppCompatActivity implements View.OnCl
             btnDeleteMovie.setOnClickListener(this);
 
             if (myMovies.isOnfavorites()) {
-                flag = getIntent().getIntExtra(EXTRA_POSITION, 0);
-                isFav = true;
+                flags = getIntent().getIntExtra(EXTRA_POSITION_DEFAULT, 0);
+                isFavorite = true;
                 btnSaveMovie.setVisibility(View.GONE);
 
             } else {
-                movieFavorite = new Movies();
+                myMovieFavorite = new Movies();
                 btnDeleteMovie.setVisibility(View.GONE);
             }
 
@@ -197,25 +197,25 @@ public class MoviesDetailActivity extends AppCompatActivity implements View.OnCl
             String url_images = urlPhoto.trim();
 
 
-            movieFavorite.setId(position);
-            movieFavorite.setOriginal_title(title);
-            movieFavorite.setVote_average(vote);
-            movieFavorite.setVote_count(vote_counts);
-            movieFavorite.setRelease_date(release_dates);
-            movieFavorite.setOverview(overviews);
-            movieFavorite.setPoster_path(url_images);
+            myMovieFavorite.setId(positionDefault);
+            myMovieFavorite.setOriginal_title(title);
+            myMovieFavorite.setVote_average(vote);
+            myMovieFavorite.setVote_count(vote_counts);
+            myMovieFavorite.setRelease_date(release_dates);
+            myMovieFavorite.setOverview(overviews);
+            myMovieFavorite.setPoster_path(url_images);
 
             Intent intent = new Intent();
-            intent.putExtra(EXTRA_MOVIE_FAVORITE, movieFavorite);
-            intent.putExtra(EXTRA_POSITION, flag);
+            intent.putExtra(EXTRA_MOVIE_FAVORITE, myMovieFavorite);
+            intent.putExtra(EXTRA_POSITION_DEFAULT, flags);
 
             /*if data not save earlier*/
-            if (!isFav) {
-                long result = movieFavoriteHelper.insertIntoMovie(movieFavorite);
+            if (!isFavorite) {
+                long result = myMovieFavoriteHelper.insertIntoMovie(myMovieFavorite);
 
                 if (result > 0) {
-                    movieFavorite.setId((int) result);
-                    setResult(RESULT_ADD, intent);
+                    myMovieFavorite.setId((int) result);
+                    setResult(ADD_RESULT, intent);
                     Toast.makeText(MoviesDetailActivity.this, getString(R.string.succes_add_data), Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
@@ -225,8 +225,8 @@ public class MoviesDetailActivity extends AppCompatActivity implements View.OnCl
 
             /*When delete data*/
         } else if (view.getId() == R.id.btn_deletes) {
-            movieFavoriteHelper = MovieFavoriteHelper.getInstance(getApplicationContext());
-            long result = movieFavoriteHelper.deleteIntoMovie(position);
+            myMovieFavoriteHelper = MovieFavoriteHelper.getInstance(getApplicationContext());
+            long result = myMovieFavoriteHelper.deleteIntoMovie(positionDefault);
             if (result > 0) {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);

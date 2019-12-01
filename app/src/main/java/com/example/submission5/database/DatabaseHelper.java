@@ -13,9 +13,9 @@ import static com.example.submission5.database.DatabaseContract.TVFavColumns.TV_
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     /*Create Database name and version*/
-    private static final String DATABASE_NAME = "submission_5_zulkarnaen";
-    private static final int DATABASE_VERSION = 4;
-    /*if you change databse you must change database version*/
+    private static final String DATABASE_NAME = "submission_5_zulka";
+    private static final int DATABASE_VERSION = 1;
+    /*if you change database you must change database version*/
 
     /*some table in movie favorite*/
     private static final String SQL_CREATE_TABLE_MOVIE_FAVORITE = String.format("CREATE TABLE %s"
@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             MOVIE_TABLE_NAME,
             DatabaseContract.MovieFavColumns._ID,
             DatabaseContract.MovieFavColumns.MOVIE_TITLE,
-            DatabaseContract.MovieFavColumns.MOVIE_VOTE_AVARAGE,
+            DatabaseContract.MovieFavColumns.MOVIE_VOTE_AVERAGE,
             DatabaseContract.MovieFavColumns.MOVIE_VOTE_COUNT,
             DatabaseContract.MovieFavColumns.MOVIE_FIRST_AIR_DATE,
             DatabaseContract.MovieFavColumns.MOVIE_OVERVIEW,
@@ -49,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             TV_TABLE_NAME,
             DatabaseContract.TVFavColumns._ID,
             DatabaseContract.TVFavColumns.TV_TITLE,
-            DatabaseContract.TVFavColumns.TV_VOTE_AVARAGE,
+            DatabaseContract.TVFavColumns.TV_VOTE_AVERAGE,
             DatabaseContract.TVFavColumns.TV_VOTE_COUNT,
             DatabaseContract.TVFavColumns.TV_FIRST_AIR_DATE,
             DatabaseContract.TVFavColumns.TV_OVERVIEW,

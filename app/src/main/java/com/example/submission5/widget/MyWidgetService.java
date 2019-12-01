@@ -16,7 +16,7 @@ public class MyWidgetService extends RemoteViewsService {
 
     /*Set Remote View Factory for widget*/
     @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent) {
+    public RemoteViewsFactory onGetViewFactory(Intent myIntents) {
         return new MyRemoteViewsFactory(this.getApplicationContext());
     }
 }

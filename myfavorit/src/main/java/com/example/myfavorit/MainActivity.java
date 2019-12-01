@@ -11,7 +11,7 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import com.example.myfavorit.adapter.MovieAdapter;
+import com.example.myfavorit.adapter.MoviesAdapter;
 
 import static com.example.myfavorit.database.DatabaseContract.CONTENT_URI;
 
@@ -19,25 +19,19 @@ import static com.example.myfavorit.database.DatabaseContract.CONTENT_URI;
  * @author zulkarnaen
  */
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-    private MovieAdapter movieAdapter;
-    private final int LOAD_NOTES_ID = 110;
+    private MoviesAdapter myMoviesAdapter;
+    private final int LOAD_ID = 110;
 
+    /*Load on Create LISTING some data*/
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void onCreate(Bundle myIntstaceSaved) {
+        super.onCreate(myIntstaceSaved);
+        setContentView(R.layout.fragment_home);
 
-        ListView listView = findViewById(R.id.list_view);
-        movieAdapter = new MovieAdapter(this, null, true);
-        listView.setAdapter(movieAdapter);
-        LoaderManager.getInstance(this).initLoader(LOAD_NOTES_ID, null, this);
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        LoaderManager.getInstance(this).restartLoader(LOAD_NOTES_ID, null, this);
+        ListView listView = findViewById(R.id.rv_category);
+        myMoviesAdapter = new MoviesAdapter(this, null, true);
+        listView.setAdapter(myMoviesAdapter);
+        LoaderManager.getInstance(this).initLoader(LOAD_ID, null, this);
     }
 
     @NonNull
@@ -48,17 +42,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-        movieAdapter.swapCursor(cursor);
+        myMoviesAdapter.swapCursor(cursor);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        movieAdapter.swapCursor(null);
+        myMoviesAdapter.swapCursor(null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoaderManager.getInstance(this).restartLoader(LOAD_ID, null, this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LoaderManager.getInstance(this).destroyLoader(LOAD_NOTES_ID);
+        LoaderManager.getInstance(this).destroyLoader(LOAD_ID);
     }
 }

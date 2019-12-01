@@ -57,7 +57,7 @@
             android:layout_marginBottom="8dp"
             android:layout_toEndOf="@id/img_photo"
             android:ellipsize="end"
-            android:maxLines="3"
+            android:maxLines="4"
             android:text="@string/lorem"
             card_view:layout_constraintBottom_toTopOf="@+id/txt_genres"
             card_view:layout_constraintEnd_toEndOf="@+id/txt_name"

@@ -31,21 +31,20 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
     /*when notification is coming, you can change text in here*/
     @Override
     public void onReceive(Context context, Intent intent) {
-        sendDailyNotification(context, context.getString(R.string.header_daily),
-                context.getString(R.string.desk_daily));
 
+        sendDailyNotification(context, context.getString(R.string.header_daily), context.getString(R.string.desk_daily));
     }
 
     /*set pending when alarm change on or of*/
     private static PendingIntent getPendingIntent(Context context) {
-        Intent mIntent = new Intent(context, DailyPushNotificationForMovie.class);
-        return PendingIntent.getBroadcast(context, R.string.id_notification, mIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent myIntents = new Intent(context, DailyPushNotificationForMovie.class);
+        return PendingIntent.getBroadcast(context, R.string.id_notification, myIntents, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     /*You can disable alarm when you don't needed*/
-    public void cancelAlarm(Context context) {
-        AlarmManager mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Objects.requireNonNull(mAlarmManager).cancel(getPendingIntent(context));
+    public void cancelMyAlarm(Context context) {
+        AlarmManager myAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Objects.requireNonNull(myAlarmManager).cancel(getPendingIntent(context));
 
         /*toast will be show when you off that daily notification*/
         Toast.makeText(context, R.string.daily_notif_off, Toast.LENGTH_SHORT).show();
@@ -53,21 +52,30 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
 
 
     /*Set alarm every 9 am 30 minutes, maybe after your break fast you can see some movies ;) */
-    public void setAlarm(Context context) {
-        cancelAlarm(context);
-        AlarmManager managerAlarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    public void setMyAlarm(Context context) {
+        cancelMyAlarm(context);
+        AlarmManager myAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         /*Set this time you needed for notification alarm*/
-        Calendar mCalendar = Calendar.getInstance();
-        mCalendar.set(Calendar.HOUR_OF_DAY, 9);
-        mCalendar.set(Calendar.MINUTE, 30);
-        mCalendar.set(Calendar.SECOND, 0);
+        Intent myIntents = new Intent(context, DailyPushNotificationForMovie.class);
+
+        PendingIntent myPendingIntents = PendingIntent.getBroadcast(context, 0, myIntents, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 30);
+        calendar.set(Calendar.SECOND, 0);
+
+        /*repeating again*/
+        assert myAlarmManager != null;
+        myAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, myPendingIntents);
 
         /*Different setting for android below Marshmallow and above*/
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            Objects.requireNonNull(managerAlarm).setInexactRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, getPendingIntent(context));
+            Objects.requireNonNull(myAlarmManager).setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, getPendingIntent(context));
         } else {
-            assert managerAlarm != null;
-            managerAlarm.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(), getPendingIntent(context));
+            myAlarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), getPendingIntent(context));
         }
 
         /*toast will be show when you on that daily notification*/
@@ -76,11 +84,11 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
 
     /*Send notification in configuration set ON*/
     private void sendDailyNotification(Context context, String title, String desc) {
-        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(
+        NotificationManager myNotificationManager = (NotificationManager) context.getSystemService(
                 Context.NOTIFICATION_SERVICE);
         Intent mIntent = new Intent(context, MainActivity.class);
 
-        PendingIntent mPendingIntent = PendingIntent.getActivity(context, R.string.id_notification, mIntent,
+        PendingIntent myPendingIntents = PendingIntent.getActivity(context, R.string.id_notification, mIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         /*Set title, text and other what you need in your phone when notification available*/
@@ -89,7 +97,7 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.ic_favorite)
                 .setContentTitle(title)
                 .setContentText(desc)
-                .setContentIntent(mPendingIntent)
+                .setContentIntent(myPendingIntents)
                 .setColor(ContextCompat.getColor(context, android.R.color.transparent))
                 .setVibrate(new long[]{1500, 1500, 1500, 1500, 1500})
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -107,11 +115,11 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
             mNotificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
 
             builder.setChannelId(context.getString(R.string.id_notification));
-            assert mNotificationManager != null;
-            mNotificationManager.createNotificationChannel(mNotificationChannel);
+            assert myNotificationManager != null;
+            myNotificationManager.createNotificationChannel(mNotificationChannel);
         }
-        assert mNotificationManager != null;
-        mNotificationManager.notify(R.string.id_notification, builder.build());
+        assert myNotificationManager != null;
+        myNotificationManager.notify(R.string.id_notification, builder.build());
 
     }
 

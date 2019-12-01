@@ -11,7 +11,7 @@ import android.os.Handler;
 public class SplashActivity extends Activity {
 
     // TODO: GIVE DELAY FOR SPLASH SCREEN
-    private static final int SPLASH_TIME = 2 * 1000;// 3 seconds delay
+    private static final int MY_SPLASH_TIME = 2 * 1000;// 3 seconds delay
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class SplashActivity extends Activity {
 
                     SplashActivity.this.finish();
                 }
-            }, SPLASH_TIME);
+            }, MY_SPLASH_TIME);
         } catch (Exception e) {
             e.printStackTrace();
         }
