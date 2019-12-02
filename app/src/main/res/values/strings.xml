@@ -47,7 +47,7 @@
     <string name="today_release">Some Movie just release Today!</string>
     <string name="daily_notif_on">Daily Notif ON</string>
     <string name="daily_notif_off">Daily Notif OFF</string>
-    <string name="id_notification">11001</string>
+    <string name="id_notification">9109</string>
     <string name="channel_name">NOTIFICATION MOVIES</string>
     <string name="release_text1">Film</string>
     <string name="enjoy">Hey o!</string>

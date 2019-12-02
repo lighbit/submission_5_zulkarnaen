@@ -45,7 +45,7 @@
     <string name="today_release">Beberapa film telah rilis</string>
     <string name="daily_notif_on">Notifikasi Harian Hidup</string>
     <string name="daily_notif_off">Notifikasi Harian Mati</string>
-    <string name="id_notification">11001</string>
+    <string name="id_notification">9109</string>
     <string name="channel_name">NOTIFICATION MOVIES</string>
     <string name="release_text1">Film</string>
     <string name="enjoy">Hey o!</string>

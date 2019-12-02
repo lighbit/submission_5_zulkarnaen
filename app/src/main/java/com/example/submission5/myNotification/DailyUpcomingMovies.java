@@ -47,7 +47,7 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
 
     /*MY API KEY*/
     private static final String MY_API_KEY = "d10721892b71839178ae7c4597123c84";
-    private static int idNotification = 2000;
+    private static int idNotification = 9109;
     private RequestQueue myQueueNotifications;
     List<Notification> listMyDailyNotification;
 
@@ -177,7 +177,7 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
     /*set pending when alarm change on or of*/
     private static PendingIntent getPending(Context context) {
         Intent myIntents = new Intent(context, DailyUpcomingMovies.class);
-        return PendingIntent.getBroadcast(context, 1011, myIntents, PendingIntent.FLAG_CANCEL_CURRENT);
+        return PendingIntent.getBroadcast(context, idNotification, myIntents, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     /*You can disable alarm when you don't needed*/
