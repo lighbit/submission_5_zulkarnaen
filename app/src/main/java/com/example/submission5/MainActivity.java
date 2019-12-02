@@ -11,13 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.submission5.favorit.MoviesFavorite;
-import com.example.submission5.favorit.TvShowFavorite;
-import com.example.submission5.notification.MenuSetting;
-import com.example.submission5.view.MoviesFragment;
-import com.example.submission5.view.SearchActivityMoviesFragment;
-import com.example.submission5.view.SearchActivityTvShowFragment;
-import com.example.submission5.view.TVShowFragment;
+import com.example.submission5.myView.MoviesFavorite;
+import com.example.submission5.myView.TvShowFavorite;
+import com.example.submission5.myNotification.MenuSetting;
+import com.example.submission5.myView.MoviesFragment;
+import com.example.submission5.myView.SearchActivityMoviesFragment;
+import com.example.submission5.myView.SearchActivityTvShowFragment;
+import com.example.submission5.myView.TVShowFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;

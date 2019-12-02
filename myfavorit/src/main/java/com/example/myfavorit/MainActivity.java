@@ -11,9 +11,9 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import com.example.myfavorit.adapter.MoviesAdapter;
+import com.example.myfavorit.myAdapter.MoviesAdapter;
 
-import static com.example.myfavorit.database.DatabaseContract.CONTENT_URI;
+import static com.example.myfavorit.myDatabase.DatabaseContract.CONTENT_URI;
 
 /**
  * @author zulkarnaen
