@@ -56,7 +56,7 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
         positionDefault = getIntent().getIntExtra(EXTRA_POSITION_DEFAULT, 0);
 
         myFavoriteTvShowHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
-        myFavoriteTvShowHelper.openMyDatabase();
+        myFavoriteTvShowHelper.openTvShowDatabase();
 
         myFavoriteTvShow = getIntent().getParcelableExtra(EXTRA_TV_SHOW);
 
@@ -143,14 +143,14 @@ public class TVShowDetailActivity extends AppCompatActivity implements View.OnCl
 
                             Glide.with(TVShowDetailActivity.this)
                                     .load(url_image)
-                                    .placeholder(R.color.colorAccent)
+                                    .placeholder(R.color.colorPrimary)
                                     .dontAnimate()
                                     .into(imagePhoto);
 
                             myProgressBar.setVisibility(View.INVISIBLE);
 
                             myFavoriteTvShowHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
-                            myFavoriteTvShowHelper.openMyDatabase();
+                            myFavoriteTvShowHelper.openTvShowDatabase();
 
                             myFavoriteTvShow = getIntent().getParcelableExtra(EXTRA_TV_FAVORITE);
                             if (tvShow.isOnfavorites()) {

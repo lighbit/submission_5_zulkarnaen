@@ -29,7 +29,6 @@ public class TVShowFavoriteHelper {
     private static final String DATABASE_TABLE = TV_TABLE_NAME;
     private static DatabaseHelper myDatabaseHelper;
     private static TVShowFavoriteHelper INSTANCE;
-
     private static SQLiteDatabase myDatabase;
 
     private TVShowFavoriteHelper(Context context) {
@@ -47,7 +46,7 @@ public class TVShowFavoriteHelper {
         return INSTANCE;
     }
 
-    public void openMyDatabase() throws SQLException {
+    public void openTvShowDatabase() throws SQLException {
         myDatabase = myDatabaseHelper.getWritableDatabase();
     }
 

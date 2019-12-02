@@ -70,21 +70,21 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.CategoryVi
         private TextView tv_title, tv_first_air_dates, tv_overview, tv_counts;
         private ImageView tv_photo;
 
-        CategoryViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tv_title = itemView.findViewById(R.id.txt_name);
-            tv_counts = itemView.findViewById(R.id.txt_genres);
-            tv_first_air_dates = itemView.findViewById(R.id.txt_tahun);
-            tv_overview = itemView.findViewById(R.id.txt_description);
-            tv_photo = itemView.findViewById(R.id.img_photo);
+        CategoryViewHolder(@NonNull View myItemView) {
+            super(myItemView);
+            tv_title = myItemView.findViewById(R.id.txt_name);
+            tv_counts = myItemView.findViewById(R.id.txt_genres);
+            tv_first_air_dates = myItemView.findViewById(R.id.txt_tahun);
+            tv_overview = myItemView.findViewById(R.id.txt_description);
+            tv_photo = myItemView.findViewById(R.id.img_photo);
         }
     }
 
 
     @NonNull
     @Override
-    public TvShowAdapter.CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemRow = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_tv_show, viewGroup, false);
+    public TvShowAdapter.CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup myViewGroup, int i) {
+        View itemRow = LayoutInflater.from(myViewGroup.getContext()).inflate(R.layout.item_tv_show, myViewGroup, false);
         return new TvShowAdapter.CategoryViewHolder(itemRow);
     }
 

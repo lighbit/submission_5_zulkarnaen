@@ -11,7 +11,7 @@ import android.widget.RemoteViewsService;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.example.submission5.R;
-import com.example.submission5.model.ResultsItem;
+import com.example.submission5.model.Notification;
 
 import java.util.concurrent.ExecutionException;
 
@@ -72,23 +72,23 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
 
     }
 
-    MyRemoteViewsFactory(Context applicationContext) {
-        myContext = applicationContext;
+    MyRemoteViewsFactory(Context myApplicationContext) {
+        myContext = myApplicationContext;
     }
 
 
     /*get Some Item if position not valid call throw*/
-    private ResultsItem getSomeItem(int position) {
+    private Notification getSomeItemOnMovies(int position) {
         if (!myListWidget.moveToPosition(position)) {
-            throw new IllegalStateException("Some Position not valid");
+            throw new IllegalStateException("Invalid Position in Widget");
         }
 
-        return new ResultsItem(myListWidget);
+        return new Notification(myListWidget);
     }
 
     @Override
     public RemoteViews getViewAt(int i) {
-        ResultsItem myItem = getSomeItem(i);
+        Notification myItem = getSomeItemOnMovies(i);
         RemoteViews myRemoteViews = new RemoteViews(myContext.getPackageName(), R.layout.my_favorite_widget_item);
 
         String url_image = "https://image.tmdb.org/t/p/w185" + myItem.getPoster_path();
@@ -100,21 +100,22 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
                     = Glide.with(myContext)
                     .asBitmap()
                     .load(url_image)
-                    .placeholder(R.color.colorAccent)
+                    .placeholder(R.color.colorPrimary)
                     .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                     .get();
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
+            e.getMessage();
         }
-
-        myRemoteViews.setImageViewBitmap(R.id.imageView, bitMapImage);
 
         Bundle extras = new Bundle();
         extras.putInt(MyFavoriteWidget.EXTRA_ITEM, i);
+
         Intent fillInIntent = new Intent();
         fillInIntent.putExtras(extras);
 
+        myRemoteViews.setImageViewBitmap(R.id.imageView, bitMapImage);
         myRemoteViews.setOnClickFillInIntent(R.id.imageView, fillInIntent);
         return myRemoteViews;
     }

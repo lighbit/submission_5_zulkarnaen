@@ -27,14 +27,14 @@ public class MoviesServiceImpl extends ViewModel {
 
     /*MY API*/
     private static final String MY_API_KEY = "d10721892b71839178ae7c4597123c84";
-    private MutableLiveData<ArrayList<Movies>> listMovies = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Movies>> myListMovies = new MutableLiveData<>();
 
     /*get all data from api*/
-    public void setMoviesData(Context context) {
+    public void setMoviesData(Context myContext) {
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<Movies> listItems = new ArrayList<>();
 
-        String language = context.getString(R.string.API);
+        String language = myContext.getString(R.string.API);
 
         String url = "https://api.themoviedb.org/3/movie/popular?api_key=" + MY_API_KEY + language;
 
@@ -52,7 +52,7 @@ public class MoviesServiceImpl extends ViewModel {
                         Movies movieItems = new Movies(weather);
                         listItems.add(movieItems);
                     }
-                    listMovies.postValue(listItems);
+                    myListMovies.postValue(listItems);
                 } catch (Exception e) {
                     Log.d("Exception", Objects.requireNonNull(e.getMessage()));
                 }
@@ -67,11 +67,11 @@ public class MoviesServiceImpl extends ViewModel {
     }
 
     /*get all data from api when search*/
-    public void setSearchMoviesWhenSearch(String param, Context context) {
+    public void setSearchMoviesWhenSearch(String param, Context myContext) {
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<Movies> listItems = new ArrayList<>();
 
-        String language = context.getString(R.string.API);
+        String language = myContext.getString(R.string.API);
 
         String url = "https://api.themoviedb.org/3/search/movie?api_key=" + MY_API_KEY + language + "&query=" + param;
 
@@ -89,7 +89,7 @@ public class MoviesServiceImpl extends ViewModel {
                         Movies movieItems = new Movies(movie);
                         listItems.add(movieItems);
                     }
-                    listMovies.postValue(listItems);
+                    myListMovies.postValue(listItems);
 
                 } catch (Exception e) {
                     Log.d("Exception", Objects.requireNonNull(e.getMessage()));
@@ -105,7 +105,7 @@ public class MoviesServiceImpl extends ViewModel {
     }
 
     /*set that data on this live Data*/
-    public LiveData<ArrayList<Movies>> getMovies() {
-        return listMovies;
+    public LiveData<ArrayList<Movies>> getDataMovies() {
+        return myListMovies;
     }
 }

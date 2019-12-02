@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">My Favorite Movie</string>
     <string name="todo_photo_movie">photo</string>
     <string name="name_heroes">Movies Name</string>
@@ -14,6 +15,7 @@
     <string name="rate">Rate</string>
     <string name="rate1">9.4</string>
     <string name="suggest">Suggest</string>
+    <string name="realy_bad">hey o, i never watch this film</string>
     <string name="bad">hey o, mehh.. don\'t watch it</string>
     <string name="good">hey o, watch this film</string>
     <string name="awesome">hey o, you must watch!!</string>

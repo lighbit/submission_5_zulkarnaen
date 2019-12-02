@@ -13,7 +13,7 @@ import static com.example.submission5.database.DatabaseContract.getString;
 /**
  * @author zulkarnaen
  */
-public class ResultsItem {
+public class Notification {
 
 
     @SerializedName("original_title")
@@ -40,7 +40,7 @@ public class ResultsItem {
     }
 
 
-    public ResultsItem() {
+    public Notification() {
     }
 
     public int getId() {
@@ -51,7 +51,7 @@ public class ResultsItem {
         this.id = id;
     }
 
-    public ResultsItem(Cursor cursor) {
+    public Notification(Cursor cursor) {
         this.id = getInt(cursor, _ID);
         this.original_title = getString(cursor, MOVIE_TITLE);
         this.poster_path = getString(cursor, MOVIE_PHOTO);

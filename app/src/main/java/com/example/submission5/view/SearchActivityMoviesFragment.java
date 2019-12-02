@@ -99,14 +99,14 @@ public class SearchActivityMoviesFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle instanceSaved) {
         super.onActivityCreated(instanceSaved);
 
-        myMoviesServiceImpl.getMovies().observe(Objects.requireNonNull(getActivity()), getMovies);
+        myMoviesServiceImpl.getDataMovies().observe(Objects.requireNonNull(getActivity()), getMovies);
         myMoviesServiceImpl.setSearchMoviesWhenSearch(paramSearch, Objects.requireNonNull(this.getContext()));
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        myMoviesServiceImpl.getMovies().removeObserver(getMovies);
+        myMoviesServiceImpl.getDataMovies().removeObserver(getMovies);
     }
 
 

@@ -25,42 +25,42 @@ public class MyFavoriteWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context myContext, Intent myIntents) {
         if (Objects.equals(myIntents.getAction(), TOAST_ACTION)) {
-            int viewIndex = myIntents.getIntExtra(EXTRA_ITEM, 0);
-            Toast.makeText(myContext, myContext.getString(R.string.choose) + viewIndex, Toast.LENGTH_SHORT).show();
+            int myIndexView = myIntents.getIntExtra(EXTRA_ITEM, 0);
+            Toast.makeText(myContext, myContext.getString(R.string.choose) + myIndexView, Toast.LENGTH_SHORT).show();
         }
         super.onReceive(myContext, myIntents);
     }
 
     /*update some widget when set up widget in layout your smart phone*/
-    static void updateSomeWidget(Context context, AppWidgetManager appWidgetManager, int idAppWidget) {
+    static void updateSomeWidget(Context myContext, AppWidgetManager myAppWidgetManager, int myAppWidgetID) {
         /*Create intent in Widget Service*/
-        Intent i = new Intent(context, MyWidgetService.class);
-        i.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, idAppWidget);
-        i.setData(Uri.parse(i.toUri(Intent.URI_INTENT_SCHEME)));
-        i.setData(Uri.parse(i.toUri(Intent.URI_INTENT_SCHEME)));
+        Intent myIntents = new Intent(myContext, MyWidgetService.class);
+        myIntents.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, myAppWidgetID);
+        myIntents.setData(Uri.parse(myIntents.toUri(Intent.URI_INTENT_SCHEME)));
 
         /*Create Remote Views in your xml*/
-        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.my_favorite_widget);
-        rv.setRemoteAdapter(R.id.image_inside, i);
-        rv.setEmptyView(R.id.image_inside, R.id.empty_view);
+        RemoteViews myRemoteViews = new RemoteViews(myContext.getPackageName(), R.layout.my_favorite_widget);
+        myRemoteViews.setRemoteAdapter(R.id.image_inside, myIntents);
+        myRemoteViews.setEmptyView(R.id.image_inside, R.id.empty_view);
 
         /*call MyFavoriteWidget to create toast action and extra app widget*/
-        Intent ti = new Intent(context, MyFavoriteWidget.class);
-        ti.setAction(MyFavoriteWidget.TOAST_ACTION);
-        ti.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, idAppWidget);
+        Intent myOtherIntent = new Intent(myContext, MyFavoriteWidget.class);
+        myOtherIntent.setAction(MyFavoriteWidget.TOAST_ACTION);
+        myOtherIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, myAppWidgetID);
 
         /*Update*/
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, ti, PendingIntent.FLAG_UPDATE_CURRENT);
-        rv.setPendingIntentTemplate(R.id.image_inside, pi);
+        PendingIntent myPendingIntent = PendingIntent.getBroadcast(myContext, 0, myOtherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        myRemoteViews.setPendingIntentTemplate(R.id.image_inside, myPendingIntent);
 
-        appWidgetManager.updateAppWidget(idAppWidget, rv);
+        myAppWidgetManager.updateAppWidget(myAppWidgetID, myRemoteViews);
     }
 
     /*call when update*/
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        for (int appWidgetId : appWidgetIds) {
-            updateSomeWidget(context, appWidgetManager, appWidgetId);
+    public void onUpdate(Context context, AppWidgetManager myAppWidgetManager, int[] myAppWidgetIds) {
+        for (int myAppWidgetId : myAppWidgetIds) {
+            updateSomeWidget(context, myAppWidgetManager, myAppWidgetId);
+            Toast.makeText(context, "Widget has been updated! ", Toast.LENGTH_SHORT).show();
         }
     }
 }

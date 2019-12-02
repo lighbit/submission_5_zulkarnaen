@@ -77,35 +77,35 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CategoryVi
         TextView ttvTitle, tvRelease, tvOverview, tvVoteCount;
 
         /*Set Default*/
-        CategoryViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ttvTitle = itemView.findViewById(R.id.txt_name);
-            tvRelease = itemView.findViewById(R.id.txt_tahun);
-            tvOverview = itemView.findViewById(R.id.txt_description);
-            tvVoteCount = itemView.findViewById(R.id.txt_genres);
-            imgPhoto = itemView.findViewById(R.id.img_photo);
+        CategoryViewHolder(@NonNull View myItemView) {
+            super(myItemView);
+            ttvTitle = myItemView.findViewById(R.id.txt_name);
+            tvRelease = myItemView.findViewById(R.id.txt_tahun);
+            tvOverview = myItemView.findViewById(R.id.txt_description);
+            tvVoteCount = myItemView.findViewById(R.id.txt_genres);
+            imgPhoto = myItemView.findViewById(R.id.img_photo);
         }
     }
 
     /*Create View Holder*/
     @NonNull
     @Override
-    public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemRow = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_movies, viewGroup, false);
+    public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup myViewGroup, int i) {
+        View itemRow = LayoutInflater.from(myViewGroup.getContext()).inflate(R.layout.item_movies, myViewGroup, false);
         return new MoviesAdapter.CategoryViewHolder(itemRow);
     }
 
     /*on Bind View Holder*/
     @Override
-    public void onBindViewHolder(@NonNull final CategoryViewHolder viewHolderCategory, final int i) {
+    public void onBindViewHolder(@NonNull final CategoryViewHolder myViewHolderCategory, final int i) {
 
-        viewHolderCategory.ttvTitle.setText(getDataMovies().get(i).getOriginal_title());
-        viewHolderCategory.tvRelease.setText(getDataMovies().get(i).getRelease_date());
-        viewHolderCategory.tvOverview.setText(getDataMovies().get(i).getOverview());
-        viewHolderCategory.tvVoteCount.setText(getDataMovies().get(i).getVote_count());
+        myViewHolderCategory.ttvTitle.setText(getDataMovies().get(i).getOriginal_title());
+        myViewHolderCategory.tvRelease.setText(getDataMovies().get(i).getRelease_date());
+        myViewHolderCategory.tvOverview.setText(getDataMovies().get(i).getOverview());
+        myViewHolderCategory.tvVoteCount.setText(getDataMovies().get(i).getVote_count());
 
         String uri = "https://image.tmdb.org/t/p/original" + getDataMovies().get(i).getPoster_path();
-        Glide.with(viewHolderCategory.itemView.getContext())
+        Glide.with(myViewHolderCategory.itemView.getContext())
                 .load(uri)
                 .listener(new RequestListener<Drawable>() {
                     @Override
@@ -118,9 +118,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CategoryVi
                         return false;
                     }
                 })
-                .into(viewHolderCategory.imgPhoto);
+                .into(myViewHolderCategory.imgPhoto);
 
-        viewHolderCategory.itemView.setOnClickListener(new CustomItemListenerClick(i, new CustomItemListenerClick.OnItemClickCallback() {
+        myViewHolderCategory.itemView.setOnClickListener(new CustomItemListenerClick(i, new CustomItemListenerClick.OnItemClickCallback() {
             /*Call Data when Data in Click*/
             @Override
             public void onItemClicked(View view, int position) {

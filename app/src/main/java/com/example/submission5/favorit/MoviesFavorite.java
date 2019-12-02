@@ -29,18 +29,18 @@ public class MoviesFavorite extends AppCompatActivity {
         setContentView(R.layout.fragment_home);
 
         /*Open Database*/
-        MovieFavoriteHelper movieFavoriteHelper = MovieFavoriteHelper.getInstance(getApplicationContext());
-        movieFavoriteHelper.openDatabase();
+        MovieFavoriteHelper myMovieFavoriteHelper = MovieFavoriteHelper.getInstance(getApplicationContext());
+        myMovieFavoriteHelper.openMoviesDatabase();
 
         /*Create Array listMovie*/
-        WeakReference<MovieFavoriteHelper> weakReference = new WeakReference<>(movieFavoriteHelper);
-        ArrayList<Movies> arrayList = weakReference.get().getAllMoviesFavorite();
+        WeakReference<MovieFavoriteHelper> myWeakReference = new WeakReference<>(myMovieFavoriteHelper);
+        ArrayList<Movies> myArrayList = myWeakReference.get().getAllMoviesFavorite();
+
+        /*set array list to list*/
+        listMovie.addAll(myArrayList);
 
         RecyclerView rvCategory = findViewById(R.id.rv_category);
         rvCategory.setHasFixedSize(true);
-
-
-        listMovie.addAll(arrayList);
 
         /*Set new layout*/
         rvCategory.setLayoutManager(new LinearLayoutManager(this));

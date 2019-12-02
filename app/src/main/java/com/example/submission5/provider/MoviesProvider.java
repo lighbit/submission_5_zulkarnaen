@@ -26,21 +26,20 @@ import static com.example.submission5.database.DatabaseContract.MovieFavColumns.
 public class MoviesProvider extends ContentProvider {
     private static final int MY_MOVIE = 1;
     private static final int MY_MOVIE_ID = 2;
-    private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     private MovieFavoriteHelper myMoviesHelper;
+    private static final UriMatcher myUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     /* CREATE KECOCOKAN URI UNTUK AUTHORITY*/
     static {
-        uriMatcher.addURI(AUTHORITY, MOVIE_TABLE_NAME, MY_MOVIE);
-        uriMatcher.addURI(AUTHORITY, MOVIE_TABLE_NAME + "/#", MY_MOVIE_ID);
+        myUriMatcher.addURI(AUTHORITY, MOVIE_TABLE_NAME, MY_MOVIE);
+        myUriMatcher.addURI(AUTHORITY, MOVIE_TABLE_NAME + "/#", MY_MOVIE_ID);
     }
-
 
     @Override
     public boolean onCreate() {
         new MovieFavoriteHelper(getContext());
         myMoviesHelper = new MovieFavoriteHelper(getContext());
-        myMoviesHelper.openDatabase();
+        myMoviesHelper.openMoviesDatabase();
         return false;
     }
 
@@ -53,10 +52,10 @@ public class MoviesProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String mySelection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         Cursor cursor;
-        int matcherTest = uriMatcher.match(uri);
-        switch (matcherTest) {
+        int myMatcherTest = myUriMatcher.match(uri);
+        switch (myMatcherTest) {
             case MY_MOVIE:
                 cursor = myMoviesHelper.queryIntoDescProvider();
                 break;
@@ -75,13 +74,12 @@ public class MoviesProvider extends ContentProvider {
         return cursor;
     }
 
-
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
         long addedInto;
 
-        if (uriMatcher.match(uri) == MY_MOVIE) {
+        if (myUriMatcher.match(uri) == MY_MOVIE) {
             addedInto = myMoviesHelper.insertIntoProvider(values);
         } else {
             addedInto = 0;
@@ -92,37 +90,36 @@ public class MoviesProvider extends ContentProvider {
         return Uri.parse(CONTENT_URI + "/" + addedInto);
     }
 
-
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        int movieUpdated;
-        if (uriMatcher.match(uri) == MY_MOVIE_ID) {
-            movieUpdated = myMoviesHelper.updateIntoProvider(uri.getLastPathSegment(), values);
+    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String mySelection, @Nullable String[] selectionArgs) {
+        int myMovieUpdates;
+        if (myUriMatcher.match(uri) == MY_MOVIE_ID) {
+            myMovieUpdates = myMoviesHelper.updateIntoProvider(uri.getLastPathSegment(), values);
         } else {
-            movieUpdated = 0;
+            myMovieUpdates = 0;
         }
 
-        if (movieUpdated > 0) {
+        if (myMovieUpdates > 0) {
             Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
         }
-        return movieUpdated;
+        return myMovieUpdates;
     }
 
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        int movieDeleted;
+    public int delete(@NonNull Uri uri, @Nullable String mySelection, @Nullable String[] selectionArgs) {
+        int myMovieDeletes;
 
-        int match = uriMatcher.match(uri);
+        int match = myUriMatcher.match(uri);
         if (match == MY_MOVIE_ID) {
-            movieDeleted = myMoviesHelper.deleteIntoProvider(uri.getLastPathSegment());
-            Log.v(Objects.requireNonNull(getContext()).getString(R.string.app_name_movie), "" + movieDeleted);
+            myMovieDeletes = myMoviesHelper.deleteIntoProvider(uri.getLastPathSegment());
+            Log.v(Objects.requireNonNull(getContext()).getString(R.string.app_name_movie), "" + myMovieDeletes);
         } else {
-            movieDeleted = 0;
+            myMovieDeletes = 0;
         }
 
-        if (movieDeleted > 0) {
+        if (myMovieDeletes > 0) {
             Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
         }
-        return movieDeleted;
+        return myMovieDeletes;
     }
 }

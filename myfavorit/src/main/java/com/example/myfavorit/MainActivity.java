@@ -24,14 +24,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     /*Load on Create LISTING some data*/
     @Override
-    protected void onCreate(Bundle myIntstaceSaved) {
-        super.onCreate(myIntstaceSaved);
+    protected void onCreate(Bundle myInstanceSaved) {
+        super.onCreate(myInstanceSaved);
         setContentView(R.layout.fragment_home);
 
-        ListView listView = findViewById(R.id.rv_category);
         myMoviesAdapter = new MoviesAdapter(this, null, true);
+
+        /*set On list*/
+        ListView listView = findViewById(R.id.rv_category);
         listView.setAdapter(myMoviesAdapter);
+
+        /*set loader Manager*/
         LoaderManager.getInstance(this).initLoader(LOAD_ID, null, this);
+
     }
 
     @NonNull

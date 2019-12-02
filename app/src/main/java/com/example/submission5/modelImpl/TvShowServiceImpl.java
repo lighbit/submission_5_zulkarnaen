@@ -25,13 +25,13 @@ import cz.msebera.android.httpclient.Header;
  */
 public class TvShowServiceImpl extends ViewModel {
     private static final String MY_API_KEY = "d10721892b71839178ae7c4597123c84";
-    private MutableLiveData<ArrayList<TvShow>> listTvShow = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<TvShow>> myListTvShow = new MutableLiveData<>();
 
-    public void setTvShow(Context context) {
+    public void setTvShow(Context myContext) {
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<TvShow> listItem = new ArrayList<>();
 
-        String language = context.getString(R.string.API);
+        String language = myContext.getString(R.string.API);
 
         String url = "https://api.themoviedb.org/3/discover/tv?api_key=" + MY_API_KEY + language;
 
@@ -50,7 +50,7 @@ public class TvShowServiceImpl extends ViewModel {
                         TvShow tvShowItems = new TvShow(tv);
                         listItem.add(tvShowItems);
                     }
-                    listTvShow.postValue(listItem);
+                    myListTvShow.postValue(listItem);
                 } catch (Exception e) {
                     Log.d("Exception", Objects.requireNonNull(e.getMessage()));
                 }
@@ -66,11 +66,11 @@ public class TvShowServiceImpl extends ViewModel {
     }
 
     /*get all data from api when search*/
-    public void setSearchTvWhenSearch(String param, Context context) {
+    public void setSearchTvWhenSearch(String param, Context myContext) {
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<TvShow> listItems = new ArrayList<>();
 
-        String language = context.getString(R.string.API);
+        String language = myContext.getString(R.string.API);
 
         String url = "https://api.themoviedb.org/3/search/tv?api_key=" + MY_API_KEY + language + "&query=" + param;
 
@@ -88,7 +88,7 @@ public class TvShowServiceImpl extends ViewModel {
                         TvShow tvShowItems = new TvShow(tvshow);
                         listItems.add(tvShowItems);
                     }
-                    listTvShow.postValue(listItems);
+                    myListTvShow.postValue(listItems);
 
                 } catch (Exception e) {
                     Log.d("Exception", Objects.requireNonNull(e.getMessage()));
@@ -104,6 +104,6 @@ public class TvShowServiceImpl extends ViewModel {
     }
 
     public LiveData<ArrayList<TvShow>> getTvShow() {
-        return listTvShow;
+        return myListTvShow;
     }
 }

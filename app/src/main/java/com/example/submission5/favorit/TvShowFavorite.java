@@ -27,18 +27,18 @@ public class TvShowFavorite extends AppCompatActivity {
         setContentView(R.layout.fragment_dashboard);
 
         /*Open Database*/
-        TVShowFavoriteHelper tvShowFavoriteHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
-        tvShowFavoriteHelper.openMyDatabase();
+        TVShowFavoriteHelper myTvShowFavoriteHelper = TVShowFavoriteHelper.getInstance(getApplicationContext());
+        myTvShowFavoriteHelper.openTvShowDatabase();
 
         /*Create Array listTvShow*/
-        WeakReference<TVShowFavoriteHelper> weakReference = new WeakReference<>(tvShowFavoriteHelper);
-        ArrayList<TvShow> arrayList = weakReference.get().getAllTvFavorite();
+        WeakReference<TVShowFavoriteHelper> myWeakReference = new WeakReference<>(myTvShowFavoriteHelper);
+        ArrayList<TvShow> myArrayList = myWeakReference.get().getAllTvFavorite();
 
         RecyclerView rvCategory = findViewById(R.id.rv_category2);
         rvCategory.setHasFixedSize(true);
 
-
-        listTvShow.addAll(arrayList);
+        /*set array list to list*/
+        listTvShow.addAll(myArrayList);
 
         /*Set new layout*/
         rvCategory.setLayoutManager(new LinearLayoutManager(this));

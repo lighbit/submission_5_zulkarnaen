@@ -57,7 +57,7 @@ public class MoviesDetailActivity extends AppCompatActivity implements View.OnCl
 
         /*Open Database*/
         myMovieFavoriteHelper = MovieFavoriteHelper.getInstance(getApplicationContext());
-        myMovieFavoriteHelper.openDatabase();
+        myMovieFavoriteHelper.openMoviesDatabase();
 
         myMovieFavorite = getIntent().getParcelableExtra(EXTRA_MOVIE_FAVORITE);
 

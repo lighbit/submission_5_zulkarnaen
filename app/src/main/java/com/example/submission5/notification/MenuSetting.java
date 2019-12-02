@@ -19,7 +19,6 @@ public class MenuSetting extends AppCompatService {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new MainFragmentPreference()).commit();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     public static class MainFragmentPreference extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
@@ -29,25 +28,25 @@ public class MenuSetting extends AppCompatService {
         /*Reminder for daily Movies*/
         DailyPushNotificationForMovie myDailyPushNotificationForMovies = new DailyPushNotificationForMovie();
         /*Change Reminder*/
-        SwitchPreference changeReminder;
-        SwitchPreference changeReminderToday;
+        SwitchPreference changeMyReminder;
+        SwitchPreference changeMyReminderToday;
 
         /*function if some change in user*/
         @Override
         public boolean onPreferenceChange(Preference myPreference, Object myObject) {
             String key = myPreference.getKey();
-            boolean value = (boolean) myObject;
-            if (key.equals(getString(R.string.today_reminder))) {
-                if (value) {
-                    myDailyPushNotificationForMovies.setMyAlarm(getActivity());
-                } else {
-                    myDailyPushNotificationForMovies.cancelMyAlarm(getActivity());
-                }
-            } else {
-                if (value) {
+            boolean conditionIsTrue = (boolean) myObject;
+            if (!key.equals(getString(R.string.today_reminder))) {
+                if (conditionIsTrue) {
                     myDailyUpcomingMovies.setMyAlarm(getActivity());
                 } else {
                     myDailyUpcomingMovies.cancelMyAlarm(getActivity());
+                }
+            } else {
+                if (conditionIsTrue) {
+                    myDailyPushNotificationForMovies.setMyAlarm(getActivity());
+                } else {
+                    myDailyPushNotificationForMovies.cancelMyAlarm(getActivity());
                 }
             }
             return true;
@@ -61,10 +60,10 @@ public class MenuSetting extends AppCompatService {
             /*merubah notifikasi on atau off pada menu setting*/
             super.onCreate(myInstanceSaved);
             addPreferencesFromResource(R.xml.main_menu_settings);
-            changeReminder = (SwitchPreference) findPreference(getString(R.string.today_reminder));
-            changeReminder.setOnPreferenceChangeListener(this);
-            changeReminderToday = (SwitchPreference) findPreference(getString(R.string.key_release_reminder));
-            changeReminderToday.setOnPreferenceChangeListener(this);
+            changeMyReminder = (SwitchPreference) findPreference(getString(R.string.today_reminder));
+            changeMyReminder.setOnPreferenceChangeListener(this);
+            changeMyReminderToday = (SwitchPreference) findPreference(getString(R.string.key_release_reminder));
+            changeMyReminderToday.setOnPreferenceChangeListener(this);
             Preference myPref = findPreference(getString(R.string.key_lang));
 
             /*Mengganti bahasa pada menu settings*/

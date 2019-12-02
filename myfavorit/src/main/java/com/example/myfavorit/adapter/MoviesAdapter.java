@@ -32,8 +32,8 @@ public class MoviesAdapter extends CursorAdapter {
 
     /*set layout*/
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-        return LayoutInflater.from(context).inflate(R.layout.item_movies, viewGroup, false);
+    public View newView(Context myContext, Cursor myCursor, ViewGroup myViewGroup) {
+        return LayoutInflater.from(myContext).inflate(R.layout.item_movies, myViewGroup, false);
     }
 
     /*layout will be set in here*/
@@ -41,33 +41,37 @@ public class MoviesAdapter extends CursorAdapter {
     public void bindView(View myView, Context myContext, Cursor myCursor) {
 
         if (myCursor != null) {
-            TextView original_title, overview, release_date, vote_count, vote_avarage, suggest;
+            TextView original_title, overview, release_date, vote_count, vote_average, suggest;
             ImageView poster_path;
 
-            /*CHOOSE*/
+            /*Choose Layer*/
             original_title = myView.findViewById(R.id.txt_name);
             vote_count = myView.findViewById(R.id.txt_genres);
             release_date = myView.findViewById(R.id.txt_tahun);
             poster_path = myView.findViewById(R.id.img_photo);
             overview = myView.findViewById(R.id.txt_description);
-            vote_avarage  = myView.findViewById(R.id.rate);
+            vote_average = myView.findViewById(R.id.rate);
             suggest = myView.findViewById(R.id.suggest);
 
             String countSuggest = getString(myCursor, MOVIE_VOTE_AVERAGE);
 
-            /*SET*/
+            /*Set from database into view Text and image*/
             original_title.setText(getString(myCursor, MOVIE_TITLE));
             vote_count.setText(getString(myCursor, MOVIE_VOTE_COUNT));
             release_date.setText(getString(myCursor, MOVIE_FIRST_AIR_DATE));
             overview.setText(getString(myCursor, MOVIE_OVERVIEW));
             Picasso.with(myContext).load("https://image.tmdb.org/t/p/original" + getString(myCursor, MOVIE_PHOTO)).placeholder(R.drawable.ic_launcher_foreground).error(R.drawable.ic_launcher_background).into(poster_path);
-            vote_avarage.setText(getString(myCursor, MOVIE_VOTE_AVERAGE));
-            if (countSuggest.startsWith("5") || countSuggest.startsWith("6")){
+            vote_average.setText(getString(myCursor, MOVIE_VOTE_AVERAGE));
+
+            /*Create Some logic here*/
+            if (countSuggest.startsWith("5") || countSuggest.startsWith("6")) {
                 suggest.setText(myContext.getString(R.string.bad));
-            } else if (countSuggest.startsWith("7") || countSuggest.startsWith("8")){
+            } else if (countSuggest.startsWith("7") || countSuggest.startsWith("8")) {
                 suggest.setText(myContext.getString(R.string.good));
-            }else if (countSuggest.startsWith("9") || countSuggest.startsWith("10")) {
+            } else if (countSuggest.startsWith("9") || countSuggest.startsWith("10")) {
                 suggest.setText(myContext.getString(R.string.awesome));
+            } else {
+                suggest.setText(myContext.getString(R.string.realy_bad));
             }
         }
 

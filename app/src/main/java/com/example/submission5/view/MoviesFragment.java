@@ -66,7 +66,7 @@ public class MoviesFragment extends Fragment {
         recyclerView.setAdapter(myMoviesAdapter);
 
         MoviesServiceImpl moviesViewModel = ViewModelProviders.of(this).get(MoviesServiceImpl.class);
-        moviesViewModel.getMovies().observe(this, getDataMovies);
+        moviesViewModel.getDataMovies().observe(this, getDataMovies);
         moviesViewModel.setMoviesData(Objects.requireNonNull(this.getContext()));
 
         myProgressBar = view.findViewById(R.id.progressBarMovies);
@@ -82,7 +82,7 @@ public class MoviesFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         /*Get Observer then set Data*/
-        myMoviesModel.getMovies().observe(Objects.requireNonNull(getActivity()), getDataMovies);
+        myMoviesModel.getDataMovies().observe(Objects.requireNonNull(getActivity()), getDataMovies);
         myMoviesModel.setMoviesData(Objects.requireNonNull(this.getContext()));
     }
 
@@ -90,6 +90,6 @@ public class MoviesFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         /*remove Observer*/
-        myMoviesModel.getMovies().removeObserver(getDataMovies);
+        myMoviesModel.getDataMovies().removeObserver(getDataMovies);
     }
 }

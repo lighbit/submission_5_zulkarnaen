@@ -53,8 +53,8 @@ public class MovieFavoriteHelper {
         return INSTANCE;
     }
 
-    /*openMyDatabase myDatabase for databaseHandler*/
-    public void openDatabase() throws SQLException {
+    /*openTvShowDatabase myDatabase for databaseHandler*/
+    public void openMoviesDatabase() throws SQLException {
         myDatabase = myDatabaseHelper.getWritableDatabase();
     }
 
