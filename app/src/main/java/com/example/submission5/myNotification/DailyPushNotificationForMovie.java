@@ -42,12 +42,12 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
     }
 
     /*You can disable alarm when you don't needed*/
-    public void cancelMyAlarm(Context context) {
-        AlarmManager myAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Objects.requireNonNull(myAlarmManager).cancel(getPendingIntent(context));
+    public void cancelMyAlarm(Context myContext) {
+        AlarmManager myAlarmManager = (AlarmManager) myContext.getSystemService(Context.ALARM_SERVICE);
+        Objects.requireNonNull(myAlarmManager).cancel(getPendingIntent(myContext));
 
         /*toast will be show when you off that daily notification*/
-        Toast.makeText(context, R.string.daily_notif_off, Toast.LENGTH_SHORT).show();
+        Toast.makeText(myContext, R.string.daily_notif_off, Toast.LENGTH_SHORT).show();
     }
 
 

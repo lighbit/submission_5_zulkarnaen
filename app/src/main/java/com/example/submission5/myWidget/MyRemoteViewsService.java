@@ -20,7 +20,7 @@ import static com.example.submission5.myDatabase.DatabaseContract.CONTENT_URI;
 /**
  * @author zulkarnaen
  */
-public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
+public class MyRemoteViewsService implements RemoteViewsService.RemoteViewsFactory {
 
     private Context myContext;
     private Cursor myListWidget;
@@ -72,7 +72,7 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
 
     }
 
-    MyRemoteViewsFactory(Context myApplicationContext) {
+    MyRemoteViewsService(Context myApplicationContext) {
         myContext = myApplicationContext;
     }
 
@@ -91,8 +91,10 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
         Notification myItem = getSomeItemOnMovies(i);
         RemoteViews myRemoteViews = new RemoteViews(myContext.getPackageName(), R.layout.my_favorite_widget_item);
 
+        /*declared url_image*/
         String url_image = "https://image.tmdb.org/t/p/w185" + myItem.getPoster_path();
 
+        /*set bitmap to send into my favorite*/
         Bitmap bitMapImage = null;
         try {
 
@@ -101,6 +103,7 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
                     .asBitmap()
                     .load(url_image)
                     .placeholder(R.color.colorPrimary)
+                    .error(R.color.colorAccent)
                     .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                     .get();
 
@@ -109,12 +112,15 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
             e.getMessage();
         }
 
+        /*Set Bundle*/
         Bundle extras = new Bundle();
         extras.putInt(MyFavoriteWidget.EXTRA_ITEM, i);
 
+        /*Call intent and put extra*/
         Intent fillInIntent = new Intent();
         fillInIntent.putExtras(extras);
 
+        /*set into image on favorite*/
         myRemoteViews.setImageViewBitmap(R.id.imageView, bitMapImage);
         myRemoteViews.setOnClickFillInIntent(R.id.imageView, fillInIntent);
         return myRemoteViews;
