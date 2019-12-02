@@ -27,6 +27,8 @@ import java.util.Objects;
  * @author zulkarnaen
  */
 public class DailyPushNotificationForMovie extends BroadcastReceiver {
+    private static int idNotification = R.string.id_notification;
+    private final static int NOTIFICATION_REQUEST_CODE = 200;
 
     /*when notification is coming, you can change text in here*/
     @Override
@@ -38,7 +40,7 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
     /*set pending when alarm change on or of*/
     private static PendingIntent getPendingIntent(Context myContext) {
         Intent myIntents = new Intent(myContext, DailyPushNotificationForMovie.class);
-        return PendingIntent.getBroadcast(myContext, R.string.id_notification, myIntents, PendingIntent.FLAG_CANCEL_CURRENT);
+        return PendingIntent.getBroadcast(myContext, idNotification, myIntents, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     /*You can disable alarm when you don't needed*/
@@ -58,7 +60,7 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
         /*Set this time you needed for notification alarm*/
         Intent myIntents = new Intent(myContext, DailyPushNotificationForMovie.class);
 
-        PendingIntent myPendingIntents = PendingIntent.getBroadcast(myContext, 0, myIntents, 0);
+        PendingIntent myPendingIntents = PendingIntent.getBroadcast(myContext, NOTIFICATION_REQUEST_CODE, myIntents, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -78,6 +80,8 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
             myAlarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), getPendingIntent(myContext));
         }
 
+        /*importance*/
+        idNotification ++;
         /*toast will be show when you on that daily notification*/
         Toast.makeText(myContext, R.string.daily_notif_on, Toast.LENGTH_SHORT).show();
     }
@@ -88,7 +92,7 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
                 Context.NOTIFICATION_SERVICE);
         Intent myIntents = new Intent(myContext, MainActivity.class);
 
-        PendingIntent myPendingIntents = PendingIntent.getActivity(myContext, R.string.id_notification, myIntents,
+        PendingIntent myPendingIntents = PendingIntent.getActivity(myContext, idNotification, myIntents,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         /*Set title, text and other what you need in your phone when notification available*/
@@ -107,19 +111,19 @@ public class DailyPushNotificationForMovie extends BroadcastReceiver {
         /*Different setting for android oreo*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel myNotificationChannels = new NotificationChannel(
-                    myContext.getString(R.string.id_notification), myContext.getString(R.string.channel_name),
+                    myContext.getString(idNotification), myContext.getString(R.string.channel_name),
                     NotificationManager.IMPORTANCE_HIGH);
             myNotificationChannels.enableLights(true);
             myNotificationChannels.setLightColor(Color.YELLOW);
             myNotificationChannels.enableVibration(true);
             myNotificationChannels.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
 
-            builder.setChannelId(myContext.getString(R.string.id_notification));
+            builder.setChannelId(myContext.getString(idNotification));
             assert myNotificationManager != null;
             myNotificationManager.createNotificationChannel(myNotificationChannels);
         }
         assert myNotificationManager != null;
-        myNotificationManager.notify(R.string.id_notification, builder.build());
+        myNotificationManager.notify(idNotification, builder.build());
 
     }
 

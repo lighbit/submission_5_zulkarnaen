@@ -20,6 +20,7 @@ public class MyFavoriteWidget extends AppWidgetProvider {
 
     public static final String TOAST_ACTION = "com.example.submission5.TOAST_ACTION";
     public static final String EXTRA_ITEM = "com.example.submission5.EXTRA_ITEM";
+    private final static int NOTIFICATION_REQUEST_CODE = 200;
 
     /*when receive that widget*/
     @Override
@@ -38,18 +39,18 @@ public class MyFavoriteWidget extends AppWidgetProvider {
         myIntents.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, myAppWidgetID);
         myIntents.setData(Uri.parse(myIntents.toUri(Intent.URI_INTENT_SCHEME)));
 
-        /*Create Remote Views in your xml*/
-        RemoteViews myRemoteViews = new RemoteViews(myContext.getPackageName(), R.layout.my_favorite_widget);
-        myRemoteViews.setRemoteAdapter(R.id.image_inside, myIntents);
-        myRemoteViews.setEmptyView(R.id.image_inside, R.id.empty_view);
-
         /*call MyFavoriteWidget to create toast action and extra app widget*/
         Intent myOtherIntent = new Intent(myContext, MyFavoriteWidget.class);
         myOtherIntent.setAction(MyFavoriteWidget.TOAST_ACTION);
         myOtherIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, myAppWidgetID);
 
+        /*Create Remote Views in your xml*/
+        RemoteViews myRemoteViews = new RemoteViews(myContext.getPackageName(), R.layout.my_favorite_widget);
+        myRemoteViews.setRemoteAdapter(R.id.image_inside, myIntents);
+        myRemoteViews.setEmptyView(R.id.image_inside, R.id.empty_view);
+
         /*Update*/
-        PendingIntent myPendingIntent = PendingIntent.getBroadcast(myContext, 0, myOtherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent myPendingIntent = PendingIntent.getBroadcast(myContext, NOTIFICATION_REQUEST_CODE, myOtherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         myRemoteViews.setPendingIntentTemplate(R.id.image_inside, myPendingIntent);
 
         myAppWidgetManager.updateAppWidget(myAppWidgetID, myRemoteViews);

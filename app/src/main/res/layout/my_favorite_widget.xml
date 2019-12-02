@@ -30,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="9"
-            android:loopViews="true" />
+            android:loopViews="true"
+            tools:background="@drawable/pikachu" />
 
         <TextView
             android:id="@+id/layout_down"

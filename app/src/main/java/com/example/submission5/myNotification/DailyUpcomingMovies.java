@@ -48,6 +48,7 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
     /*MY API KEY*/
     private static final String MY_API_KEY = "d10721892b71839178ae7c4597123c84";
     private static int idNotification = 9109;
+    private final static int NOTIFICATION_REQUEST_CODE = 200;
     private RequestQueue myQueueNotifications;
     List<Notification> listMyDailyNotification;
 
@@ -197,8 +198,7 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
         cancelMyAlarm(myContext);
         AlarmManager myAlarmManager = (AlarmManager) myContext.getSystemService(Context.ALARM_SERVICE);
         Intent myIntents = new Intent(myContext, DailyUpcomingMovies.class);
-        PendingIntent myPendingIntents = PendingIntent.getBroadcast(myContext,
-                100, myIntents, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent myPendingIntents = PendingIntent.getBroadcast(myContext, NOTIFICATION_REQUEST_CODE, myIntents, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
 //        while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
@@ -223,7 +223,8 @@ public class DailyUpcomingMovies extends BroadcastReceiver {
             myAlarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
                     calendar.getTimeInMillis() + delay, myPendingIntents);
         }
-        idNotification += 1;
+        /*importance*/
+        idNotification ++;
         /*toast will be show when you on that daily notification*/
         Toast.makeText(myContext, R.string.up_notif_on, Toast.LENGTH_SHORT).show();
     }
